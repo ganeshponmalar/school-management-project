@@ -1,40 +1,55 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import userRouter from "./routes/userRouter.js"
-import { errorMiddleware } from './middleware/errorMiddleware.js';
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import userRouter from "./routes/userRouter.js";
+import { errorMiddleware } from "./middleware/errorMiddleware.js";
+import cloudinary from "cloudinary";
+import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
+import morgan from "morgan";
+import cors from "cors";
 
 dotenv.config();
-import morgan from 'morgan';
-import cors from 'cors';
 
-const app = express()
+const app = express();
 
+// 🌥️ Cloudinary config
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-const port = process.env.PORT || 5000
-const url = process.env.MONGO_URI
-
-
+// 🔧 Middlewares
 app.use(cors({
-    origin:"http://localhost:5174",
-    method:["GET","POST","PUT","DELETE"],
-    credentials: true
-}))
+  origin: "http://localhost:5174",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(morgan("dev"));
 
-app.use(express.json())
-app.use(morgan("dev"))
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: "/tmp/",
+}));
 
+// 🗄️ Database
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Database connected successfully"))
+  .catch(err => console.log("Database error:", err));
 
-mongoose.connect(url).then(()=>{
-    console.log(`Database Connection Successfully`)
-}).catch((err)=>console.log("Database error is ",err))
+// 🚏 Routes
+app.use("/api/v1/user", userRouter);
 
-app.use("/api/v1/user",userRouter)
+// ❗ ERROR MIDDLEWARE — MUST BE LAST
+app.use(errorMiddleware);
 
-
-app.listen(port,()=>{
-    console.log(`server started on port ${port}`);
-})
-
-app.use(errorMiddleware)
+// 🚀 Start server (LAST LINE)
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});

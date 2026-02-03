@@ -1,103 +1,91 @@
 import jwt from "jsonwebtoken";
-import ErrorHandler from "./errorMiddleware";
-import { errorHandler } from "./errorHandler";
+import User from "../models/userModel.js";
+import ErrorHandler from "./errorMiddleware.js";
+import { errorHandler } from "./errorHandler.js";
 
+/* =====================
+   AUTHENTICATED USER
+===================== */
+export const isAuthenticated = errorHandler(async (req, res, next) => {
+  const token =
+    req.cookies.adminToken ||
+    req.cookies.teacherToken ||
+    req.cookies.studentToken;
 
-//This is only for Register User
-export const isAuthenticated = async (req, res, next) => {
-    const token = req.cookies.adminToken || req.cookies.teacherToken || req.cookies.studentToken
+  // ✅ FIXED
+  if (!token) {
+    return next(new ErrorHandler("User is Not Authenticated", 401));
+  }
 
-    if (token) {
-        return next(new ErrorHandler("User is Not Authenticated", 401))
-    }
-    try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        req.user = await User.findById(decode.id)
+  const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  req.user = await User.findById(decode.id);
 
-        if (!req.user) {
-            return next(new ErrorHandler("User Not Found", 404))
-        }
-        next()
-    } catch (error) {
-        return next(new ErrorHandler("Invalid token", 401))
-    }
-}
+  if (!req.user) {
+    return next(new ErrorHandler("User Not Found", 404));
+  }
 
+  next();
+});
 
-
-//this is only for student
+/* =====================
+   STUDENT ONLY
+===================== */
 export const studentToken = errorHandler(async (req, res, next) => {
-    const token = req.cookies.studentToken;
-    if (!token) {
-        return next(new ErrorHandler("Student not authentication", 401));
-    }
-    try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        req.user = await User.findById(decode.id)
+  const token = req.cookies.studentToken;
 
-        if (!req.user || req.user.role !== "Student") {
-            return next(new ErrorHandler("Student not authorized", 403))
-        }
-        next();
+  if (!token) {
+    return next(new ErrorHandler("Student not authenticated", 401));
+  }
 
-    } catch (error) {
-        return next(new errorHandler('Invalid token', 401))
-    }
+  const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  req.user = await User.findById(decode.id);
+
+  if (!req.user || req.user.role !== "student") {
+    return next(new ErrorHandler("Student not authorized", 403));
+  }
+
+  next();
 });
 
-
-
-
-
-
-
-//this is only for Teacher
+/* =====================
+   TEACHER ONLY
+===================== */
 export const teacherToken = errorHandler(async (req, res, next) => {
-    const token = req.cookies.teacherToken;
-    if (!token) {
-        return next(new ErrorHandler("Teacher not authentication", 401));
-    }
-    try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        req.user = await User.findById(decode.id)
+  const token = req.cookies.teacherToken;
 
-        if (!req.user || req.user.role !== "Teacher") {
-            return next(new ErrorHandler("Teacher not authorized", 403))
-        }
-        next();
+  if (!token) {
+    return next(new ErrorHandler("Teacher not authenticated", 401));
+  }
 
-    } catch (error) {
-        return next(new errorHandler('Invalid token', 401))
-    }
+  const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  req.user = await User.findById(decode.id);
+
+  if (!req.user || req.user.role !== "teacher") {
+    return next(new ErrorHandler("Teacher not authorized", 403));
+  }
+
+  next();
 });
 
-
-
-
-
-
-//this is only for Teacher
+/* =====================
+   ADMIN ONLY
+===================== */
 export const adminToken = errorHandler(async (req, res, next) => {
-    const token = req.cookies.adminToken;
-    if (!token) {
-        return next(new ErrorHandler("Admin not authentication", 401));
-    }
-    try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        req.user = await User.findById(decode.id)
+  const token = req.cookies.adminToken;
 
-        if (!req.user || req.user.role !== "Admin") {
-            return next(new ErrorHandler("Admin not authorized", 403))
-        }
-        next();
+  if (!token) {
+    return next(new ErrorHandler("Admin not authenticated", 401));
+  }
 
-    } catch (error) {
-        return next(new errorHandler('Invalid token', 401))
-    }
+  const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  req.user = await User.findById(decode.id);
+
+  if (!req.user || req.user.role !== "admin") {
+    return next(new ErrorHandler("Admin not authorized", 403));
+  }
+
+  next();
 });
-
-
-
 
 
 

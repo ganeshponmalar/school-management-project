@@ -1,38 +1,44 @@
 class ErrorHandler extends Error {
-    constructor(message, statusCode) {
-        super(message)
-        this.statusCode = statusCode
-    }
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+
+    Error.captureStackTrace(this, this.constructor);
+  }
 }
 
 export const errorMiddleware = (err, req, res, next) => {
-    err.message = err.message || "Internal Server Error";
-    err.statusCode = err.statusCode || 500;
-    if (err.code === 11000) {
-        err = new ErrorHandler(`Duplicate ${Object.keys(err.keyValue)} Enterd`
-            , 400
-        );
-    }
+  err.message = err.message || "Internal Server Error";
+  err.statusCode = err.statusCode || 500;
 
+  // Mongo duplicate key
+  if (err.code === 11000) {
+    err = new ErrorHandler(
+      `Duplicate field value entered: ${Object.keys(err.keyValue)}`,
+      400
+    );
+  }
 
-    if (err.name === "jsonWebTokenError") {
-        err = new ErrorHandler("Json Token is invalid,Try again", 400)
-    }
-    if (err.name === "TokenExpiredError") {
-        err = new ErrorHandler("Json Token is Expired,Try Again", 400)
-    }
-    if (err.name === "CastlError") {
-        err = new ErrorHandler(`Invalid${err.path}`, 400)
-    }
-    const errorMessage = err.errors ?
-        Object.values(err.errors)
-            .map((e) => e.message).join(" ") : err.message
+  // JWT errors
+  if (err.name === "JsonWebTokenError") {
+    err = new ErrorHandler("Invalid token, please login again", 401);
+  }
 
-            return res.status(err.statusCode).json({
-                success: false,
-                message:errorMessage,
-            });
+  if (err.name === "TokenExpiredError") {
+    err = new ErrorHandler("Token expired, please login again", 401);
+  }
 
+  // Mongoose cast error
+  if (err.name === "CastError") {
+    err = new ErrorHandler(`Invalid ${err.path}`, 400);
+  }
+
+   res.status(err.statusCode).json({
+    success: false,
+    message: err.message,
+  });
+
+ ;
 };
 
-export default ErrorHandler
+export default ErrorHandler;
