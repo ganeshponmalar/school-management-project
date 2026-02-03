@@ -40,7 +40,7 @@ export const createUserController = errorHandler(async (req, res) => {
     });
   }
 
-  // ❌ DO NOT HASH HERE
+  //  DO NOT HASH HERE
   const user = await User.create({
     name,
     email,

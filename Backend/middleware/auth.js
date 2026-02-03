@@ -3,9 +3,9 @@ import User from "../models/userModel.js";
 import ErrorHandler from "./errorMiddleware.js";
 import { errorHandler } from "./errorHandler.js";
 
-/* =====================
-   AUTHENTICATED USER
-===================== */
+
+  // AUTHENTICATED USER
+
 export const isAuthenticated = errorHandler(async (req, res, next) => {
   const token =
     req.cookies.adminToken ||
@@ -27,9 +27,9 @@ export const isAuthenticated = errorHandler(async (req, res, next) => {
   next();
 });
 
-/* =====================
-   STUDENT ONLY
-===================== */
+
+ // STUDENT ONLY
+
 export const studentToken = errorHandler(async (req, res, next) => {
   const token = req.cookies.studentToken;
 
@@ -47,9 +47,9 @@ export const studentToken = errorHandler(async (req, res, next) => {
   next();
 });
 
-/* =====================
-   TEACHER ONLY
-===================== */
+
+  // TEACHER ONLY
+
 export const teacherToken = errorHandler(async (req, res, next) => {
   const token = req.cookies.teacherToken;
 
@@ -67,9 +67,9 @@ export const teacherToken = errorHandler(async (req, res, next) => {
   next();
 });
 
-/* =====================
-   ADMIN ONLY
-===================== */
+
+  // ADMIN ONLY
+
 export const adminToken = errorHandler(async (req, res, next) => {
   const token = req.cookies.adminToken;
 

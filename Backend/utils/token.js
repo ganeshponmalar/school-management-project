@@ -3,7 +3,7 @@ export const jsontoken = (user, message, statusCode, res) => {
 
   let cookieName;
 
-  // ✅ MATCH DATABASE VALUES (lowercase)
+  //  MATCH DATABASE VALUES (lowercase)
   switch (user.role) {
     case "admin":
       cookieName = "adminToken";
