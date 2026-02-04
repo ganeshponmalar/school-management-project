@@ -194,3 +194,105 @@ export const logInController = errorHandler(async (req, res, next) => {
   // Success → send token
   jsontoken(user, "User login successful", 200, res);
 });
+
+
+
+
+export const createAdminController = errorHandler(async (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    role,
+    address,
+    phone,
+    dateOfBirth,
+    gender,
+  } = req.body;
+
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !role ||
+    !phone ||
+    !address ||
+    !dateOfBirth ||
+    !gender
+  ) {
+    return res.status(400).json({
+      message: "All fields are required",
+    });
+  }
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({
+      message: "User already exists",
+    });
+  }
+
+  //  DO NOT HASH HERE
+  const user = await User.create({
+    name,
+    email,
+    password, // ← plain password
+    phone,
+    address,
+    dateOfBirth,
+    gender,
+    role: "Admin"
+  });
+
+  res.status(201).json({
+    message: "User registered successfully",
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  });
+});
+
+
+//geting Single admin by Id
+export const getSingleAdmine = errorHandler(async (req, res, next) => {
+
+  try {
+
+    const admin = await User.findById(req.params.id);
+
+    if (!admin) {
+      return next(new errorHandler("Amin Not Found", 404))
+    }
+    //if Admin found then response
+    res.status(200).json({
+      success: true,
+      message: "Admin Found Successfully",
+      admin,
+    })
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      success: false,
+      message: "Error in single Admin",
+      error
+    })
+  }
+});
+
+
+//admin logout
+export const logOutAdmin = errorHandler(async (req, res, next) => {
+  res.status(200)
+    .cookie("adminToken", null, {
+      httpOnly: true,
+      expires: new Date(Date.now())
+    })
+    .send({
+      success: true,
+      message: "Admin Logged Out Successfully",
+    })
+})
