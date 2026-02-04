@@ -296,3 +296,67 @@ export const logOutAdmin = errorHandler(async (req, res, next) => {
       message: "Admin Logged Out Successfully",
     })
 })
+
+export const getAdminProfile = errorHandler(async (req, res, next) => {
+  try {
+    const admin = await User.findById(req.user_id)
+    if (!admin || admin.role !== "Admin") {
+      return next(new errorHandler("Admin Not Found Or Unauthorized"))
+    }
+
+
+    //If admin found then response send
+    res.status(200).json({
+      success: true, message: "Admin Profile found Successfully",
+      admin
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      success: false,
+      message: "Error in Admin Profile",
+      error
+    })
+  }
+
+})
+
+
+
+//get current user
+export const getCurrentUser = errorHandler((req, res, next) => {
+
+  try {
+    res.status(200).json({
+      success: true,
+      user: req.user,
+    })
+  } catch (error) {
+    next(new errorHandler("Fail To Get User Information", 500))
+
+  }
+})
+
+//get all user
+export const getAllUser = errorHandler(async (req, res, next) => {
+  try {
+    const users = await User.find().select("-password");
+
+    if (!users || users.length === 0) {
+      return next(new errorHandler("User Not Found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      users
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error in Get All User"
+    });
+  }
+});

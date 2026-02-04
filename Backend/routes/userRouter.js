@@ -1,22 +1,40 @@
 import express from "express";
-import {createUserController,logInController,createAdminController,getSingleAdmine,logOutAdmin} from "../controller/userController.js"
-import { adminToken } from "../middleware/auth.js"
+import {
+    createUserController,
+    logInController,
+    createAdminController,
+    getSingleAdmine,
+    logOutAdmin,
+    getAdminProfile,
+    getCurrentUser,
+    getAllUser
+} from "../controller/userController.js"
+import { adminToken ,isAuthenticated} from "../middleware/auth.js"
 
-const router =express.Router()
+const router = express.Router()
 
 
-router.post("/create_user",createUserController)
+router.post("/create_user", createUserController)
 
 //login router
-router.post("/logIn-user",logInController)
+router.post("/logIn-user", logInController)
 //admin create
-router.post("/create-user", adminToken,createAdminController)
+router.post("/create-user", adminToken, createAdminController)
 
 //get single admin
-router.get("/single-admin/:id",adminToken,getSingleAdmine )
+router.get("/single-admin/:id", adminToken, getSingleAdmine)
 
 //admin logout
-router.get("/logOut-admin",adminToken,logOutAdmin)
+router.get("/logOut-admin", adminToken, logOutAdmin)
+
+//get admin profile
+router.get("/admin-profile",isAuthenticated,adminToken, getAdminProfile)
+
+//get current user
+router.get("/me",isAuthenticated,getCurrentUser)
+
+//getAll User
+router.get("/all-users",isAuthenticated,getAllUser)
 
 
 
