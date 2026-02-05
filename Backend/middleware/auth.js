@@ -48,24 +48,6 @@ export const studentToken = errorHandler(async (req, res, next) => {
 });
 
 
-  // TEACHER ONLY
-
-export const teacherToken = errorHandler(async (req, res, next) => {
-  const token = req.cookies.teacherToken;
-
-  if (!token) {
-    return next(new ErrorHandler("Teacher not authenticated", 401));
-  }
-
-  const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  req.user = await User.findById(decode.id);
-
-  if (!req.user || req.user.role !== "teacher") {
-    return next(new ErrorHandler("Teacher not authorized", 403));
-  }
-
-  next();
-});
 
 
   // ADMIN ONLY
@@ -87,6 +69,36 @@ export const adminToken = errorHandler(async (req, res, next) => {
   next();
 });
 
+// TEACHER AUTH ONLY
+export const teacherToken = errorHandler(async (req, res, next) => {
+
+  // Check cookie first
+  const token = req.cookies.teacherToken;
+
+  if (!token) {
+    return next(new ErrorHandler("Teacher not authenticated", 401));
+  }
+
+  // Verify JWT
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+  // Find user
+  const user = await User.findById(decoded.id).select("-password");
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  // Check role (IMPORTANT lowercase)
+  if (user.role !== "teacher") {
+    return next(new ErrorHandler("Teacher not authorized", 403));
+  }
+
+  // Attach user to request
+  req.user = user;
+
+  next();
+});
 
 
 

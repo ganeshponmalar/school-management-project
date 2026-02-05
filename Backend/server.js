@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import morgan from "morgan";
 import cors from "cors";
+import teacherRouter from "./routes/teacherRouter.js"
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // 🚏 Routes
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/teacher", teacherRouter);
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST
 app.use(errorMiddleware);

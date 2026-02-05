@@ -3,7 +3,6 @@ export const jsontoken = (user, message, statusCode, res) => {
 
   let cookieName;
 
-  //  MATCH DATABASE VALUES (lowercase)
   switch (user.role) {
     case "admin":
       cookieName = "adminToken";
@@ -28,16 +27,22 @@ export const jsontoken = (user, message, statusCode, res) => {
         Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
       ),
       httpOnly: true,
+
+      // ⭐ VERY IMPORTANT FOR FRONTEND + POSTMAN
+      sameSite: "lax",
+
+      // ⭐ Only true in production HTTPS
+      secure: false,
     })
     .json({
       success: true,
       message,
+      token,
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
       },
-      token,
     });
 };

@@ -297,13 +297,15 @@ export const logOutAdmin = errorHandler(async (req, res, next) => {
     })
 })
 
+
+
+//get adminprofile
 export const getAdminProfile = errorHandler(async (req, res, next) => {
   try {
     const admin = await User.findById(req.user_id)
     if (!admin || admin.role !== "Admin") {
       return next(new errorHandler("Admin Not Found Or Unauthorized"))
     }
-
 
     //If admin found then response send
     res.status(200).json({
