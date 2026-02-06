@@ -8,25 +8,27 @@ const studentSchema = new mongoose.Schema(
     },
 
     rollNumber: {
-      type: String,
+      type: Number,
       required: [true, "Student Roll Number   is required"],
     
     },
 
-    department: {
-      type: String,
+    classId: {
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, "Student Department is Required"],
 
     },
 
-    hireDate: {
+    admissionDate: {
       type: String,
       required: [true, "student Role is required"],
      
     },
 
-    qualification:{
-        type: String,
+    guardianInfo:{
+        name: String,
+        phone:String,
+        relation:String,
        required: [true, "Teacher qualification Role is required"],
     }
 })
