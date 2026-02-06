@@ -9,6 +9,7 @@ import fileUpload from "express-fileupload";
 import morgan from "morgan";
 import cors from "cors";
 import teacherRouter from "./routes/teacherRouter.js"
+import classRouter from "./routes/classRouter.js"
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ cloudinary.v2.config({
 
 // 🔧 Middlewares
 app.use(cors({
-  origin: "http://localhost:5174",
+  origin: "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -46,6 +47,7 @@ mongoose.connect(process.env.MONGO_URI)
 // 🚏 Routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/teacher", teacherRouter);
+app.use("/api/v1/class", classRouter);
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST
 app.use(errorMiddleware);
