@@ -172,3 +172,5 @@ export const teacherProfile = errorHandler(async (req, res, next) => {
     teacher,
   });
 });
+
+

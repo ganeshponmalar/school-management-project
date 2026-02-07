@@ -9,7 +9,7 @@ import {
     getCurrentUser,
     getAllUser
 } from "../controller/userController.js"
-import { adminToken ,isAuthenticated} from "../middleware/auth.js"
+import { adminToken, isAuthenticated } from "../middleware/auth.js"
 
 const router = express.Router()
 
@@ -28,13 +28,13 @@ router.get("/single-admin/:id", adminToken, getSingleAdmine)
 router.get("/logOut-admin", adminToken, logOutAdmin)
 
 //get admin profile
-router.get("/admin-profile",isAuthenticated,adminToken, getAdminProfile)
+router.get("/admin-profile", isAuthenticated, adminToken, getAdminProfile)
 
 //get current user
-router.get("/me",isAuthenticated,getCurrentUser)
+router.get("/me", isAuthenticated, getCurrentUser)
 
 //getAll User
-router.get("/all-users",isAuthenticated,getAllUser)
+router.get("/all-users", isAuthenticated, getAllUser)
 
 
 

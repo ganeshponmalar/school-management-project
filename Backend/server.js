@@ -10,6 +10,8 @@ import morgan from "morgan";
 import cors from "cors";
 import teacherRouter from "./routes/teacherRouter.js"
 import classRouter from "./routes/classRouter.js"
+import studentRouter from "./routes/studentRouter.js"
+import attendanceRouter from "./routes/attendanceRouter.js"
 
 dotenv.config();
 
@@ -48,6 +50,9 @@ mongoose.connect(process.env.MONGO_URI)
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/teacher", teacherRouter);
 app.use("/api/v1/class", classRouter);
+app.use("/api/v1/student", studentRouter);
+app.use("/api/v1/attendance", attendanceRouter);
+
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST
 app.use(errorMiddleware);
