@@ -12,6 +12,7 @@ import teacherRouter from "./routes/teacherRouter.js"
 import classRouter from "./routes/classRouter.js"
 import studentRouter from "./routes/studentRouter.js"
 import attendanceRouter from "./routes/attendanceRouter.js"
+import examRouter from "./routes/examRouter.js"
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ app.use("/api/v1/teacher", teacherRouter);
 app.use("/api/v1/class", classRouter);
 app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/attendance", attendanceRouter);
+app.use("/api/v1/exam", examRouter);
 
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import e from "express";
+import express from "express";
 
 import { errorHandler } from "../middleware/errorHandler.js";
 import Student from "../model/studentModel.js";
