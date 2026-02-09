@@ -33,12 +33,12 @@ export const errorMiddleware = (err, req, res, next) => {
     err = new ErrorHandler(`Invalid ${err.path}`, 400);
   }
 
-   res.status(err.statusCode).json({
+  res.status(err.statusCode).json({
     success: false,
     message: err.message,
   });
 
- ;
+  ;
 };
 
 export default ErrorHandler;

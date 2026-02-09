@@ -2,7 +2,7 @@ import Exam from "../model/exameModel.js";
 import ErrorHandler from "../middleware/errorMiddleware.js"
 
 
-
+//create exam details
 export const createExam = async (req, res) => {
   try {
     const { name, classId, startDate, endDate } = req.body;
@@ -173,3 +173,4 @@ export const deleteExam = async (req, res) => {
     });
   }
 };
+

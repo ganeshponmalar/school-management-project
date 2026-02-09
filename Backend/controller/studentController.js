@@ -15,6 +15,7 @@ export const createStudent = errorHandler(async (req,res,next)=>{
     //existing student in database
     
     const existingStudent = await Student.findOne({classId,rollNumber});
+    console.log(existingStudent,'iam from existing student')
     if(existingStudent){
         return next(new errorHandler("Roll number already exists in this class"))
     }

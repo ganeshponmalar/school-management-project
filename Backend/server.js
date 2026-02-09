@@ -12,7 +12,11 @@ import teacherRouter from "./routes/teacherRouter.js"
 import classRouter from "./routes/classRouter.js"
 import studentRouter from "./routes/studentRouter.js"
 import attendanceRouter from "./routes/attendanceRouter.js"
-import examRouter from "./routes/examRouter.js"
+import examRouter from "./routes/examRouter.js";
+import feeRouter from "./routes/feeRouter.js"
+import resultRouter from "./routes/resultRouter.js"
+
+
 
 dotenv.config();
 
@@ -54,7 +58,8 @@ app.use("/api/v1/class", classRouter);
 app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/attendance", attendanceRouter);
 app.use("/api/v1/exam", examRouter);
-
+app.use("/api/v1/fee", feeRouter);
+app.use("/api/v1/result", resultRouter);
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST
 app.use(errorMiddleware);
