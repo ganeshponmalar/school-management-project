@@ -162,7 +162,7 @@ export const logInController = errorHandler(async (req, res, next) => {
 
   // Required fields
   if (!email || !password || !role) {
-    return next(new ErrorHandler("Please fill all fields", 400));
+    return next(new errorHandler("Please fill all fields", 400));
   }
 
   // Find user
@@ -170,7 +170,7 @@ export const logInController = errorHandler(async (req, res, next) => {
 
   console.log(user, 'user')
   if (!user) {
-    return next(new ErrorHandler("Invalid email or password", 401));
+    return next(new errorHandler("Invalid email or password", 401));
   }
 
   // Compare password
@@ -178,13 +178,13 @@ export const logInController = errorHandler(async (req, res, next) => {
 
   console.log(passwordMatch, 'qwerty')
   if (!passwordMatch) {
-    return next(new ErrorHandler("Invalid email or password", 401));
+    return next(new errorHandler("Invalid email or password", 401));
   }
 
   // Role check
   if (role !== user.role) {
     return next(
-      new ErrorHandler(
+      new errorHandler(
         "This email does not match the selected role",
         403
       )

@@ -1,0 +1,102 @@
+/* Container */
+.teacher-container {
+  padding: 30px;
+  min-height: calc(100vh - 140px);
+  background: #eef2f7;
+}
+
+/* Form vertical */
+.teacher-form {
+  background: white;
+  padding: 25px;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Inputs */
+.teacher-form input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.teacher-form input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Button */
+.teacher-form button {
+  background: #4caf50;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.teacher-form button:hover {
+  background: #388e3c;
+}
+
+/* Teacher cards vertical */
+.teacher-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.teacher-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Buttons */
+.edit-btn {
+  background: orange;
+  border: none;
+  padding: 8px 12px;
+  margin-right: 10px;
+  color: white;
+  border-radius: 5px;
+}
+
+.delete-btn {
+  background: red;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Header */
+.header {
+  background: #1976d2;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}

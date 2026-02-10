@@ -12,6 +12,9 @@ import Policy from './pages/Policy';
 import Register from './pages/Register';
 import Services from './pages/Services';
 import Terms from './pages/Terms';
+import StudentHomePage from './components/StudentHomePage';
+import TeacherHomePage from './components/TeacherHomePage';
+import AdminHomePage from './components/AdminHomePage';
 
 
 function App() {
@@ -32,6 +35,9 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="/services" element={<Services />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/student-home" element={<StudentHomePage/>}/>
+        <Route path="/teacher-home" element={<TeacherHomePage/>}/>
+        <Route path="/admin-home"element={<AdminHomePage/>}/>
 
         {/* 404 page */}
         <Route path="*" element={<PageNotFound />} />

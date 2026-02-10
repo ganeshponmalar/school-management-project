@@ -1,49 +1,110 @@
-/* Remove default margin */
-body {
+/* Reset */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
 
-/* Full page center */
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: #1f2937;
+  color: white;
+}
+
+.header h2 {
+  font-size: 22px;
+}
+
+.header nav a {
+  margin-left: 25px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.header nav a:hover {
+  color: #38bdf8;
+}
+
+/* PAGE CENTER */
 .container {
-  height: 100vh;
+  height: calc(100vh - 70px);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f4f7;
+  background: #f3f4f6;
 }
 
-/* Login card */
+/* LOGIN BOX */
 .login-box {
   background: white;
-  padding: 30px;
+  padding: 40px;
+  width: 350px;
   border-radius: 12px;
-  width: 320px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Inputs */
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* INPUT FIELDS */
 .login-box input,
 .login-box select {
   width: 100%;
-  padding: 10px;
-  margin: 12px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
 }
 
-/* Button */
+/* INPUT FOCUS EFFECT */
+.login-box input:focus,
+.login-box select:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 5px rgba(56, 189, 248, 0.4);
+}
+
+/* LOGIN BUTTON */
 .login-box button {
   width: 100%;
   padding: 12px;
-  background: #007bff;
-  color: white;
+  background: #38bdf8;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .login-box button:hover {
-  background: #0056b3;
+  background: #0284c7;
+}
+
+/* REGISTER LINK */
+.register-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #0284c7;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }

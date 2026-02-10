@@ -5,34 +5,34 @@ import { errorHandler } from "../middleware/errorHandler.js";
 import Student from "../model/studentModel.js";
 
 
-export const createStudent = errorHandler(async (req,res,next)=>{
-    const {userId,classId,section,rollNumber,admissionDate,guardianInfo} = req.body
-        
-    if (!userId || !classId || !section || !rollNumber || !admissionDate){
-        return next(new errorHandler("Please Provide all required fields",400));
-    }
+export const createStudent = (async (req, res, next) => {
+  const { userId, classId, section, rollNumber, admissionDate, guardianInfo } = req.body
 
-    //existing student in database
-    
-    const existingStudent = await Student.findOne({classId,rollNumber});
-    console.log(existingStudent,'iam from existing student')
-    if(existingStudent){
-        return next(new errorHandler("Roll number already exists in this class"))
-    }
+  if (!userId || !classId || !section || !rollNumber || !admissionDate) {
+    return next(new errorHandler("Please Provide all required fields", 400));
+  }
 
-    const student = await Student.create({
-        userId,
-        rollNumber,
-        classId,
-        section,
-        admissionDate,
-        guardianInfo
-    })
-    res.status(201).json({
-        success: true,
-        message: "Student Create Successful",
-        student,
-    })
+  //existing student in database
+
+  const existingStudent = await Student.findOne({ classId, rollNumber });
+  console.log(existingStudent, 'iam from existing student')
+  if (existingStudent) {
+    return next(new errorHandler("Roll number already exists in this class"))
+  }
+
+  const student = await Student.create({
+    userId,
+    rollNumber,
+    classId,
+    section,
+    admissionDate,
+    guardianInfo
+  })
+  res.status(201).json({
+    success: true,
+    message: "Student Create Successful",
+    student,
+  })
 
 })
 
