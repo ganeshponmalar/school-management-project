@@ -33,7 +33,10 @@ export const createClassController = errorHandler(async (req, res, next) => {
 //get all class
 
 export const getAllClassController = errorHandler(async (req, res, next) => {
+
+  console.log(getAllClassController,"from the class function")
   const classes = await Class.find();
+    console.log(classes,'from the class')
 
   if (!classes || classes.length === 0) {
     return next(new ErrorHandler("Class Not Found", 404));

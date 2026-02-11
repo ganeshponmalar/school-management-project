@@ -1,0 +1,104 @@
+/* HEADER */
+.header {
+  background: #0f172a;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header nav a:hover {
+  color: #38bdf8;
+}
+
+/* MAIN CONTAINER */
+.fees-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px;
+}
+
+/* FORM */
+.fees-form {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+  display: grid;
+  gap: 15px;
+}
+
+.fees-form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.fees-form button {
+  background: #2563eb;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fees-form button:hover {
+  background: #1e40af;
+}
+
+/* FEES LIST */
+.fees-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.fees-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.fees-card p {
+  margin: 6px 0;
+}
+
+/* BUTTONS */
+.edit-btn {
+  background: #10b981;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  margin-right: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* FOOTER */
+.footer {
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}

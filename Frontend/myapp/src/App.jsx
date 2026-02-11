@@ -15,6 +15,11 @@ import Terms from './pages/Terms';
 import StudentHomePage from './components/StudentHomePage';
 import TeacherHomePage from './components/TeacherHomePage';
 import AdminHomePage from './components/AdminHomePage';
+import StuAttendance from './components/StuAttendance';
+import FeesPayment from './components/FeesPayment';
+import StuExam from './components/StuExam';
+import StuResult from './components/stuResult';
+import StuClass from './components/StuClass';
 
 
 function App() {
@@ -24,10 +29,8 @@ function App() {
     <Router>
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<FAQPage />} />
@@ -35,9 +38,15 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="/services" element={<Services />} />
         <Route path="/terms" element={<Terms />} />
-        <Route path="/student-home" element={<StudentHomePage/>}/>
-        <Route path="/teacher-home" element={<TeacherHomePage/>}/>
-        <Route path="/admin-home"element={<AdminHomePage/>}/>
+        <Route path="/student-home" element={<StudentHomePage />} />
+        <Route path="/teacher-home" element={<TeacherHomePage />} />
+        <Route path="/admin-home" element={<AdminHomePage />} />
+        <Route path="/stu-attendance" element={<StuAttendance />} />
+        <Route path="/feesPay" element={<FeesPayment />} />
+        <Route path="/stu-exam" element={<StuExam />} />
+        <Route path="/stu-result" element={<StuResult />} />
+        <Route path="/stu-class" element={<StuClass />} />
+
 
         {/* 404 page */}
         <Route path="*" element={<PageNotFound />} />

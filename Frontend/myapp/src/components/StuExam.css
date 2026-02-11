@@ -1,0 +1,98 @@
+/* HEADER */
+.exam-header {
+  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  padding: 18px 40px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.exam-header nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* MAIN CONTAINER */
+.exam-container {
+  padding: 40px;
+  background: #fdf2f8;
+  min-height: 80vh;
+}
+
+/* FORM */
+.exam-form {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  display: grid;
+  gap: 15px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.exam-form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.exam-form button {
+  background: #ee0979;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* EXAM GRID */
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.exam-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border-left: 6px solid #ee0979;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.exam-card h3 {
+  margin-bottom: 10px;
+  color: #ee0979;
+}
+
+/* BUTTONS */
+.btn-group {
+  margin-top: 10px;
+}
+
+.update-btn {
+  background: #22c55e;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+.delete-btn {
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+/* FOOTER */
+.exam-footer {
+  background: #1f2937;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}

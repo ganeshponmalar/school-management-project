@@ -20,7 +20,7 @@ router.put("/update-student/:id", updateStudent)
 
 
 //Delete the student
-router.delete("/delete-student", deleteStudent)
+router.delete("/delete-student/:id", deleteStudent)
 
 //logout the student
 router.post("/logout-student", logoutStudent)
