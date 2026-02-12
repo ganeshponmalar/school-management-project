@@ -15,6 +15,7 @@ const StuAttendance = () => {
 
   // GET ALL ATTENDANCE
   const getAttendance = async () => {
+    console.log(getAttendance,'from allattendance')
     try {
       const res = await axios.get(
         "http://localhost:5000/api/v1/attendance/get-allattendance"
@@ -83,6 +84,7 @@ const StuAttendance = () => {
 
   // DELETE
   const handleDelete = async (id) => {
+    console.log(handleDelete,'fromdelete attendance')
     if (!window.confirm("Delete attendance?")) return;
 
     await axios.delete(

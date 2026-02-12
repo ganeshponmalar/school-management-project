@@ -28,10 +28,10 @@ export const jsontoken = (user, message, statusCode, res) => {
       ),
       httpOnly: true,
 
-      // ⭐ VERY IMPORTANT FOR FRONTEND + POSTMAN
+      //  VERY IMPORTANT FOR FRONTEND + POSTMAN
       sameSite: "lax",
 
-      // ⭐ Only true in production HTTPS
+      //  Only true in production HTTPS
       secure: false,
     })
     .json({
