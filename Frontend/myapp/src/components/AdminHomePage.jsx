@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./AdminHomePage.css";
+import { useAuth } from "../Context/AuthContext.jsx";
+
 import StudentHomePage from "./StudentHomePage";
 import TeacherHomePage from "./TeacherHomePage";
 import StuAttendance from "./StuAttendance";
@@ -8,35 +9,37 @@ import StuResult from "./stuResult";
 import StuClass from "./StuClass";
 import FeesHomePage from "./FeesPayment";
 
+import "./AdminHomePage.css";
+
 const AdminHomePage = () => {
+  const { user, logoutUser } = useAuth();
   const [activePage, setActivePage] = useState("admin");
 
-  // SWITCH CASE CONTENT
   const renderContent = () => {
     switch (activePage) {
       case "student":
-        return <StudentHomePage/>
+        return <StudentHomePage />;
 
       case "teacher":
-        return <TeacherHomePage/>
+        return <TeacherHomePage />;
 
       case "attendance":
-        return <StuAttendance/>
+        return <StuAttendance />;
 
       case "fees":
-        return <FeesHomePage/>
+        return <FeesHomePage />;
 
       case "exam":
-        return <StuExam/>
+        return <StuExam />;
 
       case "result":
-        return <StuResult/>
+        return <StuResult />;
 
       case "class":
-        return <StuClass/>
+        return <StuClass />;
 
       default:
-        return <h2>Admin Dashboard Home</h2>;
+        return <h2>Welcome Admin Dashboard</h2>;
     }
   };
 
@@ -46,36 +49,43 @@ const AdminHomePage = () => {
       {/* HEADER */}
       <header className="header">
         <h2>School Management System</h2>
+
+        {user && (
+          <div className="admin-info">
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+            <p>Role: {user.role}</p>
+
+            <button onClick={logoutUser}>Logout</button>
+          </div>
+        )}
       </header>
 
-      {/* BODY */}
       <div className="main">
 
         {/* SIDEBAR */}
         <aside className="sidebar">
           <h3>Dashboard</h3>
 
-          <button onClick={() => setActivePage("student")}>Student Home</button>
-          <button onClick={() => setActivePage("teacher")}>Teacher Home</button>
+          <button onClick={() => setActivePage("student")}>Student</button>
+          <button onClick={() => setActivePage("teacher")}>Teacher</button>
           <button onClick={() => setActivePage("attendance")}>Attendance</button>
-          <button onClick={() => setActivePage("fees")}>Fees Payment</button>
+          <button onClick={() => setActivePage("fees")}>Fees</button>
           <button onClick={() => setActivePage("exam")}>Exam</button>
           <button onClick={() => setActivePage("result")}>Result</button>
           <button onClick={() => setActivePage("class")}>Class</button>
         </aside>
 
-        {/* CONTENT AREA */}
+        {/* CONTENT */}
         <section className="content">
           {renderContent()}
         </section>
 
       </div>
 
-      {/* FOOTER */}
       <footer className="footer">
-        <p>© 2026 School Management System</p>
+        <p>© 2026 School Management</p>
       </footer>
-
     </div>
   );
 };
