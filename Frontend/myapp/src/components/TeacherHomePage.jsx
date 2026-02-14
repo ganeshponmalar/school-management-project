@@ -3,9 +3,14 @@ import axios from "axios";
 import "./TeacherHomePage.css";
 
 const TeacherHomePage = () => {
+
+  // Stores all teachers fetched from backend API
   const [teachers, setTeachers] = useState([]);
+
+  // Used to track editing mode (null = create mode)
   const [editId, setEditId] = useState(null);
 
+  // Form state for teacher create/update operations
   const [formData, setFormData] = useState({
     userId: "",
     subject: "",
@@ -14,7 +19,11 @@ const TeacherHomePage = () => {
     qualification: ""
   });
 
-  // GET ALL TEACHERS
+  /* =========================================================
+     FETCH ALL TEACHERS
+     - Called when component loads
+     - Also called after create/update/delete to refresh list
+  ========================================================== */
   const getTeachers = async () => {
     try {
       const res = await axios.get(
@@ -22,15 +31,20 @@ const TeacherHomePage = () => {
       );
       setTeachers(res.data.teachers);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching teachers:", error);
     }
   };
 
+  // Run only once when component mounts
   useEffect(() => {
     getTeachers();
   }, []);
 
-  // INPUT CHANGE
+  /* =========================================================
+     HANDLE FORM INPUT CHANGE
+     - Updates only the changed input field
+     - Keeps other fields unchanged using spread operator
+  ========================================================== */
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -38,18 +52,24 @@ const TeacherHomePage = () => {
     });
   };
 
-  // CREATE / UPDATE
+  /* =========================================================
+     CREATE OR UPDATE TEACHER
+     - If editId exists → update teacher
+     - Otherwise → create new teacher
+  ========================================================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       if (editId) {
+        // Update existing teacher
         await axios.put(
           `http://localhost:5000/api/v1/teacher/update-teacher/${editId}`,
           formData
         );
         alert("Teacher Updated Successfully");
       } else {
+        // Create new teacher
         await axios.post(
           "http://localhost:5000/api/v1/teacher/create-teacher",
           formData
@@ -57,6 +77,7 @@ const TeacherHomePage = () => {
         alert("Teacher Created Successfully");
       }
 
+      // Reset form after submission
       setFormData({
         userId: "",
         subject: "",
@@ -65,17 +86,22 @@ const TeacherHomePage = () => {
         qualification: ""
       });
 
-      setEditId(null);
-      getTeachers();
+      setEditId(null); // back to create mode
+      getTeachers();   // refresh teacher list
 
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      alert(err.response?.data?.message || "Error saving teacher");
     }
   };
 
-  // EDIT
+  /* =========================================================
+     EDIT TEACHER
+     - Loads selected teacher data into form
+     - Converts date format for input field compatibility
+  ========================================================== */
   const handleEdit = (teacher) => {
     setEditId(teacher._id);
+
     setFormData({
       userId: teacher.userId?._id || "",
       subject: teacher.subject,
@@ -85,7 +111,11 @@ const TeacherHomePage = () => {
     });
   };
 
-  // DELETE
+  /* =========================================================
+     DELETE TEACHER
+     - Shows confirmation popup before deletion
+     - Refreshes teacher list after deletion
+  ========================================================== */
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this teacher?")) return;
 
@@ -102,7 +132,7 @@ const TeacherHomePage = () => {
 
   return (
     <>
-      {/* HEADER */}
+      {/* ================= HEADER SECTION ================= */}
       <header className="header">
         <h2>School Management</h2>
         <nav>
@@ -113,10 +143,11 @@ const TeacherHomePage = () => {
         </nav>
       </header>
 
+      {/* ================= MAIN CONTENT ================= */}
       <div className="teacher-container">
         <h2>Teacher Management</h2>
 
-        {/* FORM */}
+        {/* FORM FOR CREATE / UPDATE TEACHER */}
         <form onSubmit={handleSubmit} className="teacher-form">
 
           <input
@@ -159,12 +190,13 @@ const TeacherHomePage = () => {
             required
           />
 
+          {/* Button label changes based on edit mode */}
           <button type="submit">
             {editId ? "Update Teacher" : "Add Teacher"}
           </button>
         </form>
 
-        {/* TEACHER LIST */}
+        {/* ================= TEACHER LIST ================= */}
         <h3>All Teachers</h3>
 
         <div className="teacher-list">
@@ -174,6 +206,7 @@ const TeacherHomePage = () => {
               <p><b>Department:</b> {t.department}</p>
               <p><b>Qualification:</b> {t.qualification}</p>
 
+              {/* Edit button */}
               <button
                 className="edit-btn"
                 onClick={() => handleEdit(t)}
@@ -181,6 +214,7 @@ const TeacherHomePage = () => {
                 Update
               </button>
 
+              {/* Delete button */}
               <button
                 className="delete-btn"
                 onClick={() => handleDelete(t._id)}
@@ -192,7 +226,7 @@ const TeacherHomePage = () => {
         </div>
       </div>
 
-      {/* FOOTER */}
+      {/* ================= FOOTER ================= */}
       <footer className="footer">
         <p>© 2026 School Management System</p>
       </footer>

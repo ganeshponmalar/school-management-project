@@ -1,6 +1,16 @@
+/*
+ Admin Dashboard Component
+ Purpose:
+ - Displays admin dashboard layout
+ - Shows logged-in admin info
+ - Controls sidebar navigation
+ - Renders selected management module
+*/
+
 import { useState } from "react";
 import { useAuth } from "../Context/AuthContext.jsx";
 
+/* Dashboard modules */
 import StudentHomePage from "./StudentHomePage";
 import TeacherHomePage from "./TeacherHomePage";
 import StuAttendance from "./StuAttendance";
@@ -12,9 +22,17 @@ import FeesHomePage from "./FeesPayment";
 import "./AdminHomePage.css";
 
 const AdminHomePage = () => {
+
+  /* Get authenticated user info and logout method */
   const { user, logoutUser } = useAuth();
+
+  /* Controls which dashboard section is visible */
   const [activePage, setActivePage] = useState("admin");
 
+  /*
+   Dynamically render dashboard content
+   based on sidebar selection
+  */
   const renderContent = () => {
     switch (activePage) {
       case "student":
@@ -46,16 +64,18 @@ const AdminHomePage = () => {
   return (
     <div className="app">
 
-      {/* HEADER */}
+      {/* ===== Header Section ===== */}
       <header className="header">
         <h2>School Management System</h2>
 
+        {/* Show admin details only when logged in */}
         {user && (
           <div className="admin-info">
             <p>Name: {user.name}</p>
             <p>Email: {user.email}</p>
             <p>Role: {user.role}</p>
 
+            {/* Logout clears auth context */}
             <button onClick={logoutUser}>Logout</button>
           </div>
         )}
@@ -63,10 +83,11 @@ const AdminHomePage = () => {
 
       <div className="main">
 
-        {/* SIDEBAR */}
+        {/* ===== Sidebar Navigation ===== */}
         <aside className="sidebar">
           <h3>Dashboard</h3>
 
+          {/* Update active section */}
           <button onClick={() => setActivePage("student")}>Student</button>
           <button onClick={() => setActivePage("teacher")}>Teacher</button>
           <button onClick={() => setActivePage("attendance")}>Attendance</button>
@@ -76,13 +97,14 @@ const AdminHomePage = () => {
           <button onClick={() => setActivePage("class")}>Class</button>
         </aside>
 
-        {/* CONTENT */}
+        {/* ===== Main Content Area ===== */}
         <section className="content">
           {renderContent()}
         </section>
 
       </div>
 
+      {/* ===== Footer ===== */}
       <footer className="footer">
         <p>© 2026 School Management</p>
       </footer>

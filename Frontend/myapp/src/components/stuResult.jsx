@@ -3,9 +3,14 @@ import axios from "axios";
 import "./StuResult.css";
 
 const StuResult = () => {
+
+    // Store all student results fetched from backend
     const [results, setResults] = useState([]);
+
+    // Holds ID when editing a result (null = create mode)
     const [editId, setEditId] = useState(null);
 
+    // Form state for creating/updating result
     const [formData, setFormData] = useState({
         studentId: "",
         examId: "",
@@ -15,7 +20,11 @@ const StuResult = () => {
         grade: ""
     });
 
-    // GET ALL RESULTS
+    /* =====================================================
+       FETCH ALL RESULTS FROM BACKEND
+       Called initially when component mounts and after
+       create/update/delete operations.
+    ====================================================== */
     const getResults = async () => {
         try {
             const res = await axios.get(
@@ -23,15 +32,19 @@ const StuResult = () => {
             );
             setResults(res.data.results);
         } catch (err) {
-            console.log(err);
+            console.log("Error fetching results:", err);
         }
     };
 
+    // Run once on component load
     useEffect(() => {
         getResults();
     }, []);
 
-    // INPUT CHANGE
+    /* =====================================================
+       HANDLE FORM INPUT CHANGE
+       Updates only the changed field while preserving others
+    ====================================================== */
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -39,18 +52,24 @@ const StuResult = () => {
         });
     };
 
-    // CREATE / UPDATE RESULT
+    /* =====================================================
+       CREATE OR UPDATE RESULT
+       - If editId exists → update existing result
+       - Otherwise → create new result
+    ====================================================== */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             if (editId) {
+                // Update existing result
                 await axios.put(
                     `http://localhost:5000/api/v1/result/update-result/${editId}`,
                     formData
                 );
                 alert("Result Updated Successfully");
             } else {
+                // Create new result
                 await axios.post(
                     "http://localhost:5000/api/v1/result/create-result",
                     formData
@@ -58,6 +77,7 @@ const StuResult = () => {
                 alert("Result Created Successfully");
             }
 
+            // Reset form after submission
             setFormData({
                 studentId: "",
                 examId: "",
@@ -67,17 +87,21 @@ const StuResult = () => {
                 grade: ""
             });
 
-            setEditId(null);
-            getResults();
+            setEditId(null); // switch back to create mode
+            getResults();    // refresh result list
 
         } catch (err) {
-            alert(err.response?.data?.message || "Error");
+            alert(err.response?.data?.message || "Error saving result");
         }
     };
 
-    // EDIT RESULT
+    /* =====================================================
+       EDIT RESULT
+       Prefills form with selected result data
+    ====================================================== */
     const handleEdit = (result) => {
         setEditId(result._id);
+
         setFormData({
             studentId: result.studentId?._id || "",
             examId: result.examId?._id || "",
@@ -88,7 +112,10 @@ const StuResult = () => {
         });
     };
 
-    // DELETE RESULT
+    /* =====================================================
+       DELETE RESULT
+       Asks confirmation before deletion and refreshes list
+    ====================================================== */
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this result?")) return;
 
@@ -105,7 +132,7 @@ const StuResult = () => {
 
     return (
         <>
-            {/* HEADER */}
+            {/* ================= HEADER SECTION ================= */}
             <header className="result-header">
                 <h2>Student Result System</h2>
                 <nav>
@@ -116,10 +143,11 @@ const StuResult = () => {
                 </nav>
             </header>
 
+            {/* ================= MAIN CONTENT ================= */}
             <div className="result-container">
                 <h2>Result Management</h2>
 
-                {/* FORM */}
+                {/* RESULT FORM (CREATE / UPDATE) */}
                 <form className="result-form" onSubmit={handleSubmit}>
                     <input
                         name="studentId"
@@ -171,22 +199,25 @@ const StuResult = () => {
                         required
                     />
 
+                    {/* Button text switches based on edit mode */}
                     <button>
                         {editId ? "Update Result" : "Add Result"}
                     </button>
                 </form>
 
-                {/* RESULTS LIST */}
+                {/* ================= RESULT LIST ================= */}
                 <div className="result-grid">
                     {results.map((r) => (
                         <div key={r._id} className="result-card">
                             <h3>{r.subject}</h3>
 
+                            {/* Student Name (fallback to ID if not populated) */}
                             <p>
                                 <b>Student:</b>{" "}
                                 {r.studentId?.name || r.studentId?._id}
                             </p>
 
+                            {/* Exam Name */}
                             <p>
                                 <b>Exam:</b>{" "}
                                 {r.examId?.name || r.examId?._id}
@@ -200,6 +231,7 @@ const StuResult = () => {
                                 <b>Grade:</b> {r.grade}
                             </p>
 
+                            {/* ACTION BUTTONS */}
                             <div className="btn-group">
                                 <button
                                     className="edit-btn"
@@ -220,7 +252,7 @@ const StuResult = () => {
                 </div>
             </div>
 
-            {/* FOOTER */}
+            {/* ================= FOOTER ================= */}
             <footer className="result-footer">
                 <p>© 2026 Student Result Portal</p>
             </footer>

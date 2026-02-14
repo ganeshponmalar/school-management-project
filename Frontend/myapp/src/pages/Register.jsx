@@ -1,9 +1,22 @@
+// React hook for managing component state
 import { useState } from "react";
+
+// Axios for making HTTP API requests
 import axios from "axios";
+
+// CSS styling for register page
 import "./Register.css";
+
+// React Router link for navigation
 import { Link } from "react-router-dom";
 
 const Register = () => {
+
+  /*
+    FORM STATE
+    Stores all registration inputs in one object.
+    Helps easy form handling and API submission.
+  */
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,6 +28,12 @@ const Register = () => {
     gender: "",
   });
 
+  /*
+    HANDLE INPUT CHANGE
+    - Updates specific field dynamically
+    - Spread operator keeps existing values
+    - Computed property updates correct input field
+  */
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -22,6 +41,12 @@ const Register = () => {
     });
   };
 
+  /*
+    HANDLE FORM SUBMIT
+    - Sends registration data to backend API
+    - Shows success/error message
+    - Clears form after successful registration
+  */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +58,7 @@ const Register = () => {
 
       alert(res.data.message);
 
-      // Clear form after success
+      // Reset form after successful registration
       setFormData({
         name: "",
         email: "",
@@ -52,10 +77,11 @@ const Register = () => {
 
   return (
     <>
-      {/* HEADER */}
+      {/* HEADER SECTION */}
       <header className="header">
         <h2 className="logo">SchoolMS</h2>
 
+        {/* Navigation menu (static links for now) */}
         <nav>
           <ul className="nav-links">
             <li>Home</li>
@@ -64,17 +90,23 @@ const Register = () => {
             <li>Policy</li>
           </ul>
         </nav>
+
+        {/* Redirect to login page */}
         <Link to="/login">
           <button className="login-btn">Login</button>
         </Link>
-
       </header>
 
-      {/* REGISTER FORM */}
+      {/* REGISTRATION FORM */}
       <div className="register-container">
-        <form className="register-form" onSubmit={handleSubmit} autoComplete="off">
+        <form
+          className="register-form"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+        >
           <h2>Register</h2>
 
+          {/* USER NAME */}
           <input
             name="name"
             placeholder="Name"
@@ -83,6 +115,7 @@ const Register = () => {
             required
           />
 
+          {/* EMAIL */}
           <input
             name="email"
             placeholder="Email"
@@ -91,6 +124,7 @@ const Register = () => {
             required
           />
 
+          {/* PASSWORD */}
           <input
             type="password"
             name="password"
@@ -100,6 +134,7 @@ const Register = () => {
             required
           />
 
+          {/* ROLE SELECTION */}
           <select
             name="role"
             value={formData.role}
@@ -112,6 +147,7 @@ const Register = () => {
             <option value="admin">Admin</option>
           </select>
 
+          {/* PHONE NUMBER */}
           <input
             name="phone"
             placeholder="Phone"
@@ -120,6 +156,7 @@ const Register = () => {
             required
           />
 
+          {/* ADDRESS */}
           <input
             name="address"
             placeholder="Address"
@@ -128,6 +165,7 @@ const Register = () => {
             required
           />
 
+          {/* DATE OF BIRTH */}
           <input
             type="date"
             name="dateOfBirth"
@@ -136,6 +174,7 @@ const Register = () => {
             required
           />
 
+          {/* GENDER */}
           <select
             name="gender"
             value={formData.gender}
@@ -147,6 +186,7 @@ const Register = () => {
             <option value="female">Female</option>
           </select>
 
+          {/* SUBMIT BUTTON */}
           <button type="submit">Register</button>
         </form>
       </div>

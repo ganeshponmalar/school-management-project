@@ -3,9 +3,14 @@ import axios from "axios";
 import "./StuExam.css";
 
 const StuExam = () => {
+
+  // Store all exam records fetched from backend
   const [exams, setExams] = useState([]);
+
+  // Store exam ID when editing (null = create mode)
   const [editId, setEditId] = useState(null);
 
+  // Form state for creating/updating exams
   const [formData, setFormData] = useState({
     name: "",
     classId: "",
@@ -13,42 +18,48 @@ const StuExam = () => {
     endDate: ""
   });
 
-  // GET ALL EXAMS
+  // ================= FETCH ALL EXAMS =================
   const getExams = async () => {
     try {
+      // API call to get exam list
       const res = await axios.get(
         "http://localhost:5000/api/v1/exam/get-all-exams"
       );
+
+      // Save exams into state
       setExams(res.data.exams);
     } catch (err) {
       console.log(err);
     }
   };
 
+  // Run once when component loads
   useEffect(() => {
     getExams();
   }, []);
 
-  // INPUT CHANGE
+  // ================= HANDLE INPUT CHANGE =================
   const handleChange = (e) => {
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
+      ...formData, // keep existing values
+      [e.target.name]: e.target.value // update changed field
     });
   };
 
-  // CREATE OR UPDATE
+  // ================= CREATE OR UPDATE EXAM =================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       if (editId) {
+        // UPDATE exam if editId exists
         await axios.put(
           `http://localhost:5000/api/v1/exam/update-exam/${editId}`,
           formData
         );
         alert("Exam Updated Successfully");
       } else {
+        // CREATE new exam
         await axios.post(
           "http://localhost:5000/api/v1/exam/create-exam",
           formData
@@ -56,6 +67,7 @@ const StuExam = () => {
         alert("Exam Created Successfully");
       }
 
+      // Reset form after submit
       setFormData({
         name: "",
         classId: "",
@@ -63,27 +75,33 @@ const StuExam = () => {
         endDate: ""
       });
 
-      setEditId(null);
-      getExams();
+      setEditId(null); // switch back to create mode
+      getExams(); // refresh exam list
 
     } catch (err) {
       alert(err.response?.data?.message || "Error");
     }
   };
 
-  // EDIT
+  // ================= EDIT EXAM =================
   const handleEdit = (exam) => {
+
+    // Save selected exam ID for update
     setEditId(exam._id);
+
+    // Fill form with existing exam data
     setFormData({
       name: exam.name,
       classId: exam.classId?._id || "",
-      startDate: exam.startDate?.split("T")[0],
+      startDate: exam.startDate?.split("T")[0], // format date
       endDate: exam.endDate?.split("T")[0]
     });
   };
 
-  // DELETE
+  // ================= DELETE EXAM =================
   const handleDelete = async (id) => {
+
+    // Confirm before delete
     if (!window.confirm("Delete this exam?")) return;
 
     try {
@@ -91,6 +109,8 @@ const StuExam = () => {
         `http://localhost:5000/api/v1/exam/delete-exam/${id}`
       );
       alert("Exam Deleted");
+
+      // Refresh exam list after delete
       getExams();
     } catch {
       alert("Delete failed");
@@ -99,7 +119,7 @@ const StuExam = () => {
 
   return (
     <>
-      {/* HEADER */}
+      {/* HEADER SECTION */}
       <header className="exam-header">
         <h2>School Exam Portal</h2>
         <nav>
@@ -110,11 +130,11 @@ const StuExam = () => {
         </nav>
       </header>
 
-      {/* MAIN */}
+      {/* MAIN CONTENT */}
       <div className="exam-container">
         <h2>Exam Management</h2>
 
-        {/* FORM */}
+        {/* CREATE / UPDATE FORM */}
         <form className="exam-form" onSubmit={handleSubmit}>
           <input
             name="name"
@@ -148,12 +168,13 @@ const StuExam = () => {
             required
           />
 
+          {/* Button text changes based on edit/create mode */}
           <button>
             {editId ? "Update Exam" : "Create Exam"}
           </button>
         </form>
 
-        {/* LIST */}
+        {/* EXAM LIST DISPLAY */}
         <div className="exam-grid">
           {exams.map((exam) => (
             <div key={exam._id} className="exam-card">
@@ -174,6 +195,7 @@ const StuExam = () => {
                 {exam.endDate?.split("T")[0]}
               </p>
 
+              {/* ACTION BUTTONS */}
               <div className="btn-group">
                 <button
                   className="update-btn"
@@ -194,7 +216,7 @@ const StuExam = () => {
         </div>
       </div>
 
-      {/* FOOTER */}
+      {/* FOOTER SECTION */}
       <footer className="exam-footer">
         <p>© 2026 School Exam Management</p>
       </footer>
