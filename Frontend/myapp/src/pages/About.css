@@ -1,0 +1,15 @@
+.about-container {
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+.about-container h1 {
+  color: #2c3e50;
+}
+
+.about-container h2 {
+  margin-top: 20px;
+  color: #34495e;
+}

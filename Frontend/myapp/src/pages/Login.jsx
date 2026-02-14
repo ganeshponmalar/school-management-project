@@ -106,7 +106,7 @@ const Login = () => {
         {/* Navigation links */}
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/policy">Policy</Link>
+          <Link to="/about">About</Link>
           <Link to="/services">Service</Link>
           <Link to="/help">Help</Link>
         </nav>
