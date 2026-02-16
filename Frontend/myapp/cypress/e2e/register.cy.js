@@ -1,18 +1,18 @@
 describe("User Registration → Login Redirect Automation", () => {
 
   beforeEach(() => {
-    cy.visit("http://localhost:5173/register");
+    cy.visit("http://localhost:5174/register");
   });
 
-  it("Register successfully then click Login button", () => {
+  it("Register successfully then redirect to login", () => {
 
     const email = `test${Date.now()}@mail.com`;
 
-    // Intercept register API
+    // Intercept register API (adjust endpoint if needed)
     cy.intercept("POST", "**/create_user").as("registerReq");
 
-    // Fill register form
-    cy.get('input[name="name"]').type("Ganesh Test");
+    // Fill form
+    cy.get('input[name="name"]').should("be.visible").type("Ganesh Test");
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type("123456");
     cy.get('select[name="role"]').select("teacher");
@@ -21,22 +21,24 @@ describe("User Registration → Login Redirect Automation", () => {
     cy.get('input[name="dateOfBirth"]').type("2000-05-10");
     cy.get('select[name="gender"]').select("male");
 
-    // Submit registration
-    cy.contains("button", "Register").click();
-
-    // Wait API response
-    cy.wait("@registerReq");
-
-    // Handle alert popup
+    // Handle alert BEFORE clicking register
     cy.on("window:alert", (text) => {
-      expect(text.toLowerCase()).to.include("registered successfully");
+      expect(text.toLowerCase()).to.include("registered");
     });
 
-    // Click Login button after register
-    cy.get(".login-btn", { timeout: 10000 }).click();
+    // Click register
+    cy.contains("button", "Register")
+      .should("be.enabled")
+      .click();
 
-    // Verify redirected to login page
-    cy.url().should("include", "/");
+    // Wait API success
+    cy.wait("@registerReq")
+      .its("response.statusCode")
+      .should("eq", 201); // change if your API returns 200
+
+    // Wait redirect to login page
+    cy.location("pathname", { timeout: 15000 })
+      .should("eq", "/");
 
   });
 

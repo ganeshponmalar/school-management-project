@@ -10,7 +10,7 @@ describe("Teacher Login + Create Teacher", () => {
     cy.intercept("POST", "**/create-teacher").as("createTeacher");
 
     // Visit login page
-    cy.visit("http://localhost:5173/");
+    cy.visit("http://localhost:5174/");
 
     // Fill login form
     cy.get('input[name="email"]')
