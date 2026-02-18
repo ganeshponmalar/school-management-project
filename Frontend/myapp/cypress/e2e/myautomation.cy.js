@@ -69,7 +69,7 @@ describe("Practice Page Test", () => {
             expect(text).to.contains('Hello');
             return true; // Click OK (change to false to click Cancel)
         });
-       cy.wait(500)
+        cy.wait(500)
         cy.get('#hide-textbox').click();
         cy.get('#displayed-text').should('not.be.visible');
         cy.wait(500)
@@ -77,7 +77,7 @@ describe("Practice Page Test", () => {
         cy.get('#displayed-text').should('be.visible');
 
         cy.wait(500)
-      cy.contains('button', 'Home').click();
+        cy.contains('button', 'Home').click();
     });
 
 });
