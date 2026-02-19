@@ -9,20 +9,20 @@ describe("GreenKart Complete Checkout Flow", () => {
         const items = ["Carrot", "Tomato", "Mango", "Mushroom ", "Brinjal ", "Pumpkin", "walnuts"];
 
         // -------- ADD PRODUCTS --------
-        cy.get(".product").each(($el) => {
+        cy.get(".product").each(($el) => { //first geting the class name and using for each method
 
-            const productName = $el.find(".product-name").text();
+            const productName = $el.find(".product-name").text();  //finding all products in the array using product class name
 
             items.forEach((item) => {
                 if (productName.includes(item)) {
-                    cy.wrap($el)
+                    cy.wrap($el)    
                         .contains("ADD TO CART")
                         .click();
                 }
             });
 
         });
-
+        
 
         cy.wait(500);
 
