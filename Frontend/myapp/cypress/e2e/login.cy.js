@@ -14,6 +14,7 @@ describe("Login Page Test", () => {
     // Select 'User' radio button
     cy.get("input[value='user']").check({ force: true });
     cy.wait(600);
+    
 
     // Confirm popup alert
     cy.get("#okayBtn").click({ force: true });

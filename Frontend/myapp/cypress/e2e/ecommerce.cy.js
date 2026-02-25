@@ -15,14 +15,14 @@ describe("GreenKart Complete Checkout Flow", () => {
 
             items.forEach((item) => {
                 if (productName.includes(item)) {
-                    cy.wrap($el)    
+                    cy.wrap($el)
                         .contains("ADD TO CART")
                         .click();
                 }
             });
 
         });
-        
+
 
         cy.wait(500);
 
