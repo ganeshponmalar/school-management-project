@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../Context/AuthContext.jsx";
 import "./TeacherHomePage.css";
 
 const TeacherHomePage = () => {
 
+  const { user, logoutUser } = useAuth();
   // Stores all teachers fetched from backend API
   const [teachers, setTeachers] = useState([]);
 
@@ -135,8 +137,19 @@ const TeacherHomePage = () => {
       {/* ================= HEADER SECTION ================= */}
       <header className="header">
         <h2>School Management</h2>
+
+        {user && (
+          <div className="user-info">
+            <p>Username: {user.name}</p>
+            <p>ID: {user._id || user.id}</p>
+            <p>Role: {user.role}</p>
+            <button onClick={logoutUser}>Logout</button>
+          </div>
+        )}
+
         <nav>
           <a href="/">Home</a>
+          <a href="/all-teacher">Teacher Data</a>
           <a href="/policy">Policy</a>
           <a href="/service">Service</a>
           <a href="/help">Help</a>

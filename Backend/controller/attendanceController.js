@@ -153,9 +153,9 @@ export const updateAttendance = async (req, res) => {
       });
     }
 
-    // Optional student validation
+    // Optional student validation while requesting with studentId
     if (studentId) {
-      const student = await Student.findById(studentId);
+      const student = await Student.findById(studentId); //checking student in the database
       if (!student) {
         return res.status(404).json({
           success: false,

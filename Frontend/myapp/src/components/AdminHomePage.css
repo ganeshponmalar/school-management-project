@@ -1,65 +1,197 @@
+/* Admin Dashboard Global Resets */
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --sidebar-bg: #111827;
+  --sidebar-hover: #374151;
+  --text-light: #f9fafb;
+  --text-dark: #1f2937;
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
 }
 
 /* Header */
 .header {
-  background: #1e40af;
+  background: var(--primary-color);
+  color: var(--text-light);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--box-shadow);
+  z-index: 10;
+}
+
+.header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.95rem;
+}
+
+.user-info p {
+  margin: 0;
+}
+
+.user-info button {
+  background-color: transparent;
   color: white;
-  padding: 15px;
-  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.user-info button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
 }
 
 /* Body */
 .main {
   display: flex;
   flex: 1;
+  overflow: hidden;
+  /* Prevent body scroll, let content scroll */
 }
 
 /* Sidebar */
 .sidebar {
-  width: 220px;
-  background: #111827;
-  padding: 20px;
+  width: 260px;
+  background: var(--sidebar-bg);
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  padding-left: 10px;
 }
 
 .sidebar button {
-  padding: 12px;
-  margin-bottom: 10px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
   border: none;
   background: transparent;
-  color: white;
+  color: #d1d5db;
   text-align: left;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
 }
 
 .sidebar button:hover {
-  background: #374151;
+  background: var(--sidebar-hover);
+  color: white;
 }
 
-/* Content */
+/* Example active state class (you can toggle this dynamically in JS if needed) */
+.sidebar button.active {
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+}
+
+/* Content Area */
 .content {
   flex: 1;
-  padding: 20px;
-  background: #f3f4f6;
+  padding: 30px;
+  background: var(--bg-color);
   overflow-y: auto;
+  position: relative;
+}
+
+/* HIDE NESTED HEADERS AND FOOTERS TO PREVENT DUPLICATION IN DASHBOARD */
+.content header,
+.content footer,
+.content .header,
+.content .footer {
+  display: none !important;
 }
 
 /* Footer */
 .footer {
-  background: #1e40af;
-  color: white;
+  background: #1f2937;
+  color: #9ca3af;
   text-align: center;
-  padding: 10px;
+  padding: 12px;
+  font-size: 0.85rem;
+}
+
+/* Welcome Container */
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.welcome-container h2 {
+  font-size: 2.5rem;
+  color: rgba(31, 41, 55, 0.4);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.quick-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+
+.quick-links button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: var(--box-shadow);
+}
+
+.quick-links button:hover {
+  background-color: var(--primary-hover);
 }

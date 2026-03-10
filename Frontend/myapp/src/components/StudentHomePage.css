@@ -1,141 +1,180 @@
-/* ===== Reset ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* ===== Page Layout ===== */
-body, html {
-  height: 100%;
-}
-
-/* Main container */
-.student-container {
-  min-height: calc(100vh - 140px);
-  padding: 30px 20px;
-  background: #f4f6f9;
-}
-
-/* ===== HEADER ===== */
+/* Header */
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: #007bff;
+  background: var(--primary-color, #4f46e5);
   color: white;
-  padding: 15px 40px;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
-.header nav a {
+.header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.header a {
   color: white;
-  text-decoration: none;
   margin-left: 20px;
+  text-decoration: none;
   font-weight: 500;
 }
 
-.header nav a:hover {
-  text-decoration: underline;
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.95rem;
 }
 
-/* ===== FOOTER ===== */
-.footer {
-  background: #222;
+.user-info p {
+  margin: 0;
+}
+
+.user-info button {
+  background-color: transparent;
   color: white;
-  text-align: center;
-  padding: 15px;
-  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.user-info button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+/* ===== Page Layout ===== */
+.student-container {
+  padding: 10px;
+  background: var(--bg-color, #f4f6f9);
 }
 
 /* ===== FORM DESIGN ===== */
 .student-form {
-  background: white;
-  padding: 25px;
-  max-width: 600px;
-  margin: 20px auto;
-  border-radius: 10px;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+  background: var(--card-bg, white);
+  padding: 30px;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  border-radius: var(--border-radius, 10px);
+  box-shadow: var(--box-shadow, 0 5px 12px rgba(0, 0, 0, 0.08));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.student-form h4 {
+  grid-column: 1 / -1;
+  margin-top: 15px;
+  color: var(--primary-color, #4f46e5);
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
 }
 
 /* Input fields */
 .student-form input {
   width: 100%;
   padding: 12px 14px;
-  margin: 10px 0;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   font-size: 15px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 /* Focus effect */
 .student-form input:focus {
-  border-color: #007bff;
+  border-color: var(--primary-color, #4f46e5);
   outline: none;
-  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
 /* Button */
 .student-form button {
-  width: 100%;
-  padding: 12px;
-  background: #007bff;
+  grid-column: 1 / -1;
+  padding: 14px;
+  background: var(--primary-color, #4f46e5);
   border: none;
   color: white;
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
   margin-top: 10px;
+  font-weight: 600;
+  transition: background 0.2s;
 }
 
 .student-form button:hover {
-  background: #0056b3;
+  background: var(--primary-hover, #4338ca);
 }
 
-/* ===== STUDENT CARD ===== */
+/* ===== STUDENT CARD GRID ===== */
+.student-container>h3 {
+  color: var(--text-dark, #1f2937);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
 .student-card {
-  background: white;
-  padding: 20px;
-  margin: 15px auto;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  background: var(--card-bg, white);
+  padding: 24px;
+  margin-bottom: 20px;
+  border-radius: var(--border-radius, 10px);
+  box-shadow: var(--box-shadow, 0 3px 8px rgba(0, 0, 0, 0.05));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-left: 5px solid var(--primary-color, #4f46e5);
+}
+
+.student-card p {
+  margin: 0;
+  color: #4b5563;
+}
+
+.student-card b {
+  color: #111827;
 }
 
 /* Buttons */
-.edit-btn {
-  background: orange;
-  color: white;
+.edit-btn,
+.delete-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
   border: none;
-  padding: 8px 14px;
-  margin-right: 10px;
-  border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.edit-btn {
+  background: #f59e0b;
+  color: white;
+  margin-right: 10px;
 }
 
 .delete-btn {
-  background: red;
+  background: #ef4444;
   color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
-.edit-btn:hover {
-  background: darkorange;
-}
-
+.edit-btn:hover,
 .delete-btn:hover {
-  background: darkred;
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-/* ===== Titles ===== */
-h2, h3, h4 {
-  text-align: center;
-  margin-bottom: 15px;
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .student-form {
+    grid-template-columns: 1fr;
+  }
 }

@@ -6,11 +6,15 @@ import React, { useEffect, useState } from "react";
 // Axios is used for backend API communication
 import axios from "axios";
 
+// Custom authentication context hook
+import { useAuth } from "../Context/AuthContext.jsx";
+
 // CSS styling for this page
 import "./StudentHomePage.css";
 
 // Main Student Management Component
 const StudentHomePage = () => {
+  const { user, logoutUser } = useAuth();
 
   // Store all students fetched from backend
   const [students, setStudents] = useState([]);
@@ -185,6 +189,16 @@ const StudentHomePage = () => {
       {/* HEADER SECTION */}
       <header className="header">
         <h2>School Management</h2>
+
+        {user && (
+          <div className="user-info">
+            <p>Username: {user.name}</p>
+            <p>ID: {user._id || user.id}</p>
+            <p>Role: {user.role}</p>
+            <button onClick={logoutUser}>Logout</button>
+          </div>
+        )}
+
         <nav>
           <a href="/">Home</a>
           <a href="/policy">Policy</a>

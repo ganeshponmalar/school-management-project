@@ -26,6 +26,11 @@ import FeesPayment from './components/FeesPayment';
 import StuExam from './components/StuExam';
 import StuResult from './components/stuResult';
 import StuClass from './components/StuClass';
+import AllTeacher from './components/AllTeacher';
+import AllAdmin from './components/AllAdmin';
+import AllStudent from './components/AllStudent';
+
+
 
 function App() {
   return (
@@ -76,10 +81,15 @@ function App() {
 
           {/* Class management page */}
           <Route path="/stu-class" element={<StuClass />} />
+          <Route path="/all-teacher" element={<AllTeacher />} />
+          <Route path="/all-admin" element={<AllAdmin />} />
+          <Route path="/all-student" element={<AllStudent />} />
+
+
 
           {/* ---------- FALLBACK ROUTE ---------- */}
           {/* Handles unknown URLs */}
-   
+
 
         </Routes>
 
