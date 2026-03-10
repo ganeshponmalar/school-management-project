@@ -92,7 +92,7 @@ const Register = () => {
         </nav>
 
         {/* Redirect to login page */}
-        <Link to="/login">
+        <Link to="/">
           <button className="login-btn">Login</button>
         </Link>
       </header>

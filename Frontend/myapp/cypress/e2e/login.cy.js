@@ -28,6 +28,7 @@ describe("Login Page Test", () => {
     cy.get("select.form-control").select("Teacher");
     cy.wait(1000);
 
+
     // Click Sign In button
     cy.get("#signInBtn").click();
     cy.wait(1000);

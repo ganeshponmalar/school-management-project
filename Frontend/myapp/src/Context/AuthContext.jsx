@@ -10,9 +10,12 @@ const AuthContext = createContext();
 // Provider component to wrap entire app
 // Makes authentication data accessible to all child components
 export const AuthProvider = ({ children }) => {
-
   // State to store logged-in user information
-  const [user, setUser] = useState(null);
+  // Initializes from localStorage if available (persistence)
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   /*
     LOGIN FUNCTION
@@ -25,9 +28,14 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(data));
   };
 
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   return (
     // Provide user state and login function globally
-    <AuthContext.Provider value={{ user, loginUser }}>
+    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

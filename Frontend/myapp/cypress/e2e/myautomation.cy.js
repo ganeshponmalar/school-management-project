@@ -42,7 +42,6 @@ describe("Practice Page Test", () => {
             .should("be.checked");
 
 
-
         // Click Open Window button
         cy.get('#openwindow').click();
         cy.wait(500);

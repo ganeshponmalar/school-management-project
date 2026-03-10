@@ -4,7 +4,7 @@ import "./TeacherHomePage.css"; // Reuse styling for consistency
 
 const AllTeacher = () => {
     const [teachers, setTeachers] = useState([]);
-
+   
     const getTeachers = async () => {
         try {
             const res = await axios.get("http://localhost:5000/api/v1/teacher/get-teacher");
@@ -16,6 +16,7 @@ const AllTeacher = () => {
 
     useEffect(() => {
         getTeachers();
+        
     }, []);
 
     return (
