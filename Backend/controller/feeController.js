@@ -1,15 +1,14 @@
+import { errorHandler } from "../middleware/errorHandler.js";
+import ErrorHandler from "../middleware/errorMiddleware.js";
 import Fee from "../model/feeModel.js";
 
 
 // Create Fee
-export const createFee = (async (req, res) => {
+export const createFee = errorHandler(async (req, res, next) => {
   const { studentId, amount, dueDate, paymentDate } = req.body;
 
   if (!studentId || !amount || !dueDate) {
-    return res.status(400).json({
-      success: false,
-      message: "StudentId, amount, dueDate required",
-    });
+    return next(new ErrorHandler("StudentId, amount, dueDate required", 400));
   }
 
   let status = "pending";
@@ -34,91 +33,61 @@ export const createFee = (async (req, res) => {
 
 
 //getAll fee
-export const getAllFees = (async (req, res, next) => {
-  try {
-    const fees = await Fee.find().populate("studentId");
+export const getAllFees = errorHandler(async (req, res, next) => {
+  const fees = await Fee.find().populate("studentId");
 
-    res.status(200).json({
-      success: true,
-      count: fees.length,
-      fees,
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server Error" });
-  }
+  res.status(200).json({
+    success: true,
+    count: fees.length,
+    fees,
+  });
 });
+
 
 //get single fee
-export const getSingleFee = (async (req, res, next) => {
-  try {
-    const fee = await Fee.findById(req.params.id).populate("studentId");
+export const getSingleFee = errorHandler(async (req, res, next) => {
+  const fee = await Fee.findById(req.params.id).populate("studentId");
 
-    if (!fee) {
-      return res.status(404).json({
-        success: false,
-        message: "Fee not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      fee,
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server Error" });
+  if (!fee) {
+    return next(new ErrorHandler("Fee not found", 404));
   }
+
+  res.status(200).json({
+    success: true,
+    fee,
+  });
 });
+
 
 //update fee
-export const updateFee = (async (req, res, next) => {
-  try {
-    const fee = await Fee.findByIdAndUpdate(req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+export const updateFee = errorHandler(async (req, res, next) => {
+  const fee = await Fee.findByIdAndUpdate(req.params.id,
+    req.body,
+    { new: true, runValidators: true }
+  );
 
-    if (!fee) {
-      return res.status(404).json({
-        success: false,
-        message: "Fee not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Fee updated successfully",
-      fee,
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server Error" });
+  if (!fee) {
+    return next(new ErrorHandler("Fee not found", 404));
   }
+
+  res.status(200).json({
+    success: true,
+    message: "Fee updated successfully",
+    fee,
+  });
 });
 
+
 //delete fee
-export const deleteFee = (async (req, res, next) => {
-  try {
-    const fee = await Fee.findByIdAndDelete(req.params.id);
+export const deleteFee = errorHandler(async (req, res, next) => {
+  const fee = await Fee.findByIdAndDelete(req.params.id);
 
-    if (!fee) {
-      return res.status(404).json({
-        success: false,
-        message: "Fee not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Fee deleted successfully",
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Server Error" });
+  if (!fee) {
+    return next(new ErrorHandler("Fee not found", 404));
   }
+
+  res.status(200).json({
+    success: true,
+    message: "Fee deleted successfully",
+  });
 });

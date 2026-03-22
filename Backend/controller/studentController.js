@@ -2,14 +2,15 @@ import jwt from "jsonwebtoken";
 import express from "express";
 
 import { errorHandler } from "../middleware/errorHandler.js";
+import ErrorHandler from "../middleware/errorMiddleware.js";
 import Student from "../model/studentModel.js";
 
 
-export const createStudent = (async (req, res, next) => {
+export const createStudent = errorHandler(async (req, res, next) => {
   const { userId, classId, section, rollNumber, admissionDate, guardianInfo } = req.body
 
   if (!userId || !classId || !section || !rollNumber || !admissionDate) {
-    return next(new errorHandler("Please Provide all required fields", 400));
+    return next(new ErrorHandler("Please Provide all required fields", 400));
   }
 
   //existing student in database
@@ -17,7 +18,7 @@ export const createStudent = (async (req, res, next) => {
   const existingStudent = await Student.findOne({ classId, rollNumber });
   console.log(existingStudent, 'iam from existing student')
   if (existingStudent) {
-    return next(new errorHandler("Roll number already exists in this class"))
+    return next(new ErrorHandler("Roll number already exists in this class"))
   }
 
   const student = await Student.create({
@@ -38,126 +39,80 @@ export const createStudent = (async (req, res, next) => {
 
 //single student deatails
 
-export const getSingleStudent = async (req, res) => {
-  try {
-    const { id } = req.params;
+export const getSingleStudent = errorHandler(async (req, res, next) => {
+  const { id } = req.params;
 
-    const student = await Student.findById(id)
-      .populate("userId")
-      .populate("classId");
+  const student = await Student.findById(id)
+    .populate("userId")
+    .populate("classId")
+    .lean();
 
-    if (!student) {
-      return res.status(404).json({
-        success: false,
-        message: "Student not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      student,
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
+  if (!student) {
+    return next(new ErrorHandler("Student not found", 404));
   }
-};
+
+  res.status(200).json({
+    success: true,
+    student,
+  });
+});
 
 //getall student details 
 
-export const getAllStudents = async (req, res) => {
-  try {
-    const students = await Student.find()
-      .populate("userId")
-      .populate("classId");
+export const getAllStudents = errorHandler(async (req, res, next) => {
+  const students = await Student.find()
+    .populate("userId")
+    .populate("classId")
+    .lean();
 
-    if (!students.length) {
-      return res.status(404).json({
-        success: false,
-        message: "No students found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      count: students.length,
-      students,
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
+  if (!students.length) {
+    return next(new ErrorHandler("No students found", 404));
   }
-};
+
+  res.status(200).json({
+    success: true,
+    count: students.length,
+    students,
+  });
+});
 
 //student update 
-export const updateStudent = async (req, res) => {
-  try {
-    const { id } = req.params;
+export const updateStudent = errorHandler(async (req, res, next) => {
+  const { id } = req.params;
 
-    const updatedStudent = await Student.findByIdAndUpdate(
-      id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+  const updatedStudent = await Student.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true, runValidators: true }
+  );
 
-    if (!updatedStudent) {
-      return res.status(404).json({
-        success: false,
-        message: "Student not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Student updated successfully",
-      student: updatedStudent,
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
+  if (!updatedStudent) {
+    return next(new ErrorHandler("Student not found", 404));
   }
-};
+
+  res.status(200).json({
+    success: true,
+    message: "Student updated successfully",
+    student: updatedStudent,
+  });
+});
 
 //delete the student data 
 
-export const deleteStudent = async (req, res) => {
-  try {
-    const { id } = req.params;
+export const deleteStudent = errorHandler(async (req, res, next) => {
+  const { id } = req.params;
 
-    const student = await Student.findByIdAndDelete(id);
+  const student = await Student.findByIdAndDelete(id);
 
-    if (!student) {
-      return res.status(404).json({
-        success: false,
-        message: "Student not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Student deleted successfully",
-    });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
+  if (!student) {
+    return next(new ErrorHandler("Student not found", 404));
   }
-};
+
+  res.status(200).json({
+    success: true,
+    message: "Student deleted successfully",
+  });
+});
 
 
 //logout Student
@@ -187,7 +142,7 @@ export const studentProfile = errorHandler(async (req, res, next) => {
 
   // Check authentication
   if (!req.user) {
-    return next(new errorHandler("Please login first", 401));
+    return next(new ErrorHandler("Please login first", 401));
   }
 
   // Find student record using logged user ID
@@ -198,7 +153,7 @@ export const studentProfile = errorHandler(async (req, res, next) => {
     .populate("classId");
 
   if (!student) {
-    return next(new errorHandler("Student record not found", 404));
+    return next(new ErrorHandler("Student record not found", 404));
   }
 
   res.status(200).json({

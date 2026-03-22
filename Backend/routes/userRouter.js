@@ -7,7 +7,8 @@ import {
     logOutAdmin,
     getAdminProfile,
     getCurrentUser,
-    getAllUser
+    getAllUser,
+    updateUserController
 } from "../controller/userController.js"
 import { adminToken, isAuthenticated } from "../middleware/auth.js"
 
@@ -32,6 +33,9 @@ router.get("/admin-profile", isAuthenticated, adminToken, getAdminProfile)
 
 //get current user
 router.get("/me", isAuthenticated, getCurrentUser)
+
+//update user
+router.put("/update-user/:id", isAuthenticated, adminToken, updateUserController)
 
 //getAll User
 router.get("/all-users", isAuthenticated, getAllUser)

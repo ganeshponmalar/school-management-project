@@ -1,7 +1,7 @@
 import User from "../model/userModel.js"
 import bcrypt from 'bcrypt'
 import { errorHandler } from "../middleware/errorHandler.js";
-import { errorMiddleware } from "../middleware/errorMiddleware.js";
+import ErrorHandler from "../middleware/errorMiddleware.js";
 import cloudinary from "cloudinary"
 import { jsontoken } from "../utils/token.js";
 
@@ -162,7 +162,7 @@ export const logInController = errorHandler(async (req, res, next) => {
 
   // Required fields
   if (!email || !password || !role) {
-    return next(new errorHandler("Please fill all fields", 400));
+    return next(new ErrorHandler("Please fill all fields", 400));
   }
 
   // Find user
@@ -170,7 +170,7 @@ export const logInController = errorHandler(async (req, res, next) => {
 
   console.log(user, 'user')
   if (!user) {
-    return next(new errorHandler("Invalid email or password", 401));
+    return next(new ErrorHandler("Invalid email or password", 401));
   }
 
   // Compare password
@@ -178,13 +178,13 @@ export const logInController = errorHandler(async (req, res, next) => {
 
   console.log(passwordMatch, 'qwerty')
   if (!passwordMatch) {
-    return next(new errorHandler("Invalid email or password", 401));
+    return next(new ErrorHandler("Invalid email or password", 401));
   }
 
   // Role check
   if (role !== user.role) {
     return next(
-      new errorHandler(
+      new ErrorHandler(
         "This email does not match the selected role",
         403
       )
@@ -256,6 +256,27 @@ export const createAdminController = errorHandler(async (req, res) => {
 });
 
 
+// Update User (Admin)
+export const updateUserController = errorHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedUser) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "User updated successfully",
+    user: updatedUser,
+  });
+});
+
 //geting Single admin by Id
 export const getSingleAdmine = errorHandler(async (req, res, next) => {
 
@@ -264,7 +285,7 @@ export const getSingleAdmine = errorHandler(async (req, res, next) => {
     const admin = await User.findById(req.params.id);
 
     if (!admin) {
-      return next(new errorHandler("Amin Not Found", 404))
+      return next(new ErrorHandler("Amin Not Found", 404))
     }
     //if Admin found then response
     res.status(200).json({
@@ -304,7 +325,7 @@ export const getAdminProfile = errorHandler(async (req, res, next) => {
   try {
     const admin = await User.findById(req.user_id)
     if (!admin || admin.role !== "Admin") {
-      return next(new errorHandler("Admin Not Found Or Unauthorized"))
+      return next(new ErrorHandler("Admin Not Found Or Unauthorized"))
     }
 
     //If admin found then response send
@@ -334,7 +355,7 @@ export const getCurrentUser = errorHandler((req, res, next) => {
       user: req.user,
     })
   } catch (error) {
-    next(new errorHandler("Fail To Get User Information", 500))
+    next(new ErrorHandler("Fail To Get User Information", 500))
 
   }
 })
@@ -345,7 +366,7 @@ export const getAllUser = errorHandler(async (req, res, next) => {
     const users = await User.find().select("-password");
 
     if (!users || users.length === 0) {
-      return next(new errorHandler("User Not Found", 404));
+      return next(new ErrorHandler("User Not Found", 404));
     }
 
     res.status(200).json({

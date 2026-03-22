@@ -34,9 +34,9 @@ export const createClassController = errorHandler(async (req, res, next) => {
 
 export const getAllClassController = errorHandler(async (req, res, next) => {
 
-  console.log(getAllClassController,"from the class function")
+  console.log(getAllClassController, "from the class function")
   const classes = await Class.find();
-    console.log(classes,'from the class')
+  console.log(classes, 'from the class')
 
   if (!classes || classes.length === 0) {
     return next(new ErrorHandler("Class Not Found", 404));
@@ -53,26 +53,15 @@ export const getAllClassController = errorHandler(async (req, res, next) => {
 
 //getSingle classController
 export const getSingleClassController = errorHandler(async (req, res, next) => {
-
-    try{
   const classData = await Class.findById(req.params.id);
 
   if (!classData) {
     return next(new ErrorHandler("Class Not Found", 404));
   }
 
-    res.status(200).json({
+  res.status(200).json({
     success: true,
     message: "Class Found Successfully",
-    classData,
-  });
-
-    }catch(error){
-        console.log(error)
-    }
-  res.status(500).json({
-    success: true,
-    message: "Error in Get Single Class Controller",
     classData,
   });
 });
@@ -111,22 +100,17 @@ export const updateClassController = errorHandler(async (req, res, next) => {
 
 //delete the class
 
-export const deleteClassController = async (req, res, next) => {
-  try {
-    const classData = await Class.findById(req.params.id);
+export const deleteClassController = errorHandler(async (req, res, next) => {
+  const classData = await Class.findById(req.params.id);
 
-    if (!classData) {
-      return next(new ErrorHandler("Class Not Found", 404));
-    }
-
-    await classData.deleteOne();
-
-    res.status(200).json({
-      success: true,
-      message: "Class Deleted Successfully",
-    });
-
-  } catch (error) {
-    next(error); // send error to errorMiddleware
+  if (!classData) {
+    return next(new ErrorHandler("Class Not Found", 404));
   }
-};
+
+  await classData.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    message: "Class Deleted Successfully",
+  });
+});
