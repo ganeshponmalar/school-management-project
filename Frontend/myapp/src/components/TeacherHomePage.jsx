@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
+import AllAdmissions from "./AllAdmissions";
 import "./TeacherHomePage.css";
 
 const TeacherHomePage = () => {
 
   const { user, logoutUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/home");
+  };
   // Stores all teachers fetched from backend API
   const [teachers, setTeachers] = useState([]);
+
+  // Track active view (teachers or admissions)
+  const [activeView, setActiveView] = useState("teachers");
 
   // Used to track editing mode (null = create mode)
   const [editId, setEditId] = useState(null);
@@ -143,13 +154,14 @@ const TeacherHomePage = () => {
             <p>Username: {user.name}</p>
             <p>ID: {user._id || user.id}</p>
             <p>Role: {user.role}</p>
-            <button onClick={logoutUser}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
         )}
 
         <nav>
           <a href="/">Home</a>
-          <a href="/all-teacher">Teacher Data</a>
+          <button onClick={() => setActiveView("teachers")} className={activeView === "teachers" ? "nav-btn active" : "nav-btn"}>Teacher Data</button>
+          <button onClick={() => setActiveView("admissions")} className={activeView === "admissions" ? "nav-btn active" : "nav-btn"}>View Admissions</button>
           <a href="/policy">Policy</a>
           <a href="/service">Service</a>
           <a href="/help">Help</a>
@@ -157,87 +169,93 @@ const TeacherHomePage = () => {
       </header>
 
       {/* ================= MAIN CONTENT ================= */}
-      <div className="teacher-container">
-        <h2>Teacher Management</h2>
+      {activeView === "teachers" ? (
+        <div className="teacher-container">
+          <h2>Teacher Management</h2>
 
-        {/* FORM FOR CREATE / UPDATE TEACHER */}
-        <form onSubmit={handleSubmit} className="teacher-form">
+          {/* FORM FOR CREATE / UPDATE TEACHER */}
+          <form onSubmit={handleSubmit} className="teacher-form">
 
-          <input
-            name="userId"
-            placeholder="User ID"
-            value={formData.userId}
-            onChange={handleChange}
-            required
-          />
+            <input
+              name="userId"
+              placeholder="User ID"
+              value={formData.userId}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            name="subject"
-            placeholder="Subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-          />
+            <input
+              name="subject"
+              placeholder="Subject"
+              value={formData.subject}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            name="department"
-            placeholder="Department"
-            value={formData.department}
-            onChange={handleChange}
-            required
-          />
+            <input
+              name="department"
+              placeholder="Department"
+              value={formData.department}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            type="date"
-            name="hireDate"
-            value={formData.hireDate}
-            onChange={handleChange}
-            required
-          />
+            <input
+              type="date"
+              name="hireDate"
+              value={formData.hireDate}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            name="qualification"
-            placeholder="Qualification"
-            value={formData.qualification}
-            onChange={handleChange}
-            required
-          />
+            <input
+              name="qualification"
+              placeholder="Qualification"
+              value={formData.qualification}
+              onChange={handleChange}
+              required
+            />
 
-          {/* Button label changes based on edit mode */}
-          <button type="submit">
-            {editId ? "Update Teacher" : "Add Teacher"}
-          </button>
-        </form>
+            {/* Button label changes based on edit mode */}
+            <button type="submit">
+              {editId ? "Update Teacher" : "Add Teacher"}
+            </button>
+          </form>
 
-        {/* ================= TEACHER LIST ================= */}
-        <h3>All Teachers</h3>
+          {/* ================= TEACHER LIST ================= */}
+          <h3>All Teachers</h3>
 
-        <div className="teacher-list">
-          {teachers.map((t) => (
-            <div key={t._id} className="teacher-card">
-              <p><b>Subject:</b> {t.subject}</p>
-              <p><b>Department:</b> {t.department}</p>
-              <p><b>Qualification:</b> {t.qualification}</p>
+          <div className="teacher-list">
+            {teachers.map((t) => (
+              <div key={t._id} className="teacher-card">
+                <p><b>Subject:</b> {t.subject}</p>
+                <p><b>Department:</b> {t.department}</p>
+                <p><b>Qualification:</b> {t.qualification}</p>
 
-              {/* Edit button */}
-              <button
-                className="edit-btn"
-                onClick={() => handleEdit(t)}
-              >
-                Update
-              </button>
+                {/* Edit button */}
+                <button
+                  className="edit-btn"
+                  onClick={() => handleEdit(t)}
+                >
+                  Update
+                </button>
 
-              {/* Delete button */}
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(t._id)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
+                {/* Delete button */}
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(t._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="admission-view-wrapper">
+          <AllAdmissions />
+        </div>
+      )}
 
       {/* ================= FOOTER ================= */}
       <footer className="footer">

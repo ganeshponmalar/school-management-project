@@ -1,0 +1,61 @@
+.admission-form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admission-form-container h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.admission-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.admission-form input,
+.admission-form select,
+.admission-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.admission-form textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.admission-form button {
+    padding: 12px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.admission-form button:hover {
+    background-color: #1557b0;
+}
+
+.admission-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.status-message {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #d93025;
+}

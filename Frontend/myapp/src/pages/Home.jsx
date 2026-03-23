@@ -80,7 +80,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; 2026 Greenwood Academy. All rights reserved.</p>
+                    <p>&copy; 2026 Philrobo Academy. All rights reserved.</p>
                 </div>
             </footer>
         </div>

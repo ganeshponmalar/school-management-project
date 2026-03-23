@@ -8,6 +8,7 @@ import axios from "axios";
 
 // Custom authentication context hook
 import { useAuth } from "../Context/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 // CSS styling for this page
 import "./StudentHomePage.css";
@@ -15,6 +16,12 @@ import "./StudentHomePage.css";
 // Main Student Management Component
 const StudentHomePage = () => {
   const { user, logoutUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/home");
+  };
 
   // Store all students fetched from backend
   const [students, setStudents] = useState([]);
@@ -195,7 +202,7 @@ const StudentHomePage = () => {
             <p>Username: {user.name}</p>
             <p>ID: {user._id || user.id}</p>
             <p>Role: {user.role}</p>
-            <button onClick={logoutUser}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
         )}
 

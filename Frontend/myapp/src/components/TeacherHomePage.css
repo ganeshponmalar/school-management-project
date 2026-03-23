@@ -148,3 +148,21 @@
 .delete-btn:hover {
   opacity: 0.9;
 }
+.nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+.nav-btn.active {
+    border-bottom: 2px solid white;
+}
+
+.admission-view-wrapper {
+    padding: 20px;
+    background-color: #f5f5f5;
+    min-height: calc(100vh - 200px);
+}

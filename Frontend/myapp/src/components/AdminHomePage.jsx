@@ -8,6 +8,7 @@
 */
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext.jsx";
 
 /* Dashboard modules */
@@ -19,6 +20,8 @@ import StuResult from "./stuResult";
 import StuClass from "./StuClass";
 import FeesHomePage from "./FeesPayment";
 import AllAdmin from "./AllAdmin";
+import AdmissionForm from "./AdmissionForm";
+import AllAdmissions from "./AllAdmissions";
 
 import AllStudent from "./AllStudent";
 import AllTeacher from "./AllTeacher";
@@ -30,6 +33,12 @@ const AdminHomePage = () => {
 
   /* Get authenticated user info and logout method */
   const { user, logoutUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/home");
+  };
 
   /* Controls which dashboard section is visible */
   const [activePage, setActivePage] = useState("admin");
@@ -70,6 +79,12 @@ const AdminHomePage = () => {
       case "teacher-data":
         return <AllTeacher />;
 
+      case "add-admission":
+        return <AdmissionForm />;
+
+      case "all-admissions":
+        return <AllAdmissions />;
+
 
 
       default:
@@ -103,7 +118,7 @@ const AdminHomePage = () => {
             <p>Role: {user.role}</p>
 
             {/* Logout clears auth context */}
-            <button onClick={logoutUser}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
         )}
       </header>
@@ -125,6 +140,8 @@ const AdminHomePage = () => {
           <button className={activePage === "admin-data" ? "active" : ""} onClick={() => setActivePage("admin-data")}>Admin Data</button>
           <button className={activePage === "student-data" ? "active" : ""} onClick={() => setActivePage("student-data")}>Student Data</button>
           <button className={activePage === "teacher-data" ? "active" : ""} onClick={() => setActivePage("teacher-data")}>Teacher Data</button>
+          <button className={activePage === "add-admission" ? "active" : ""} onClick={() => setActivePage("add-admission")}>Add Admission</button>
+          <button className={activePage === "all-admissions" ? "active" : ""} onClick={() => setActivePage("all-admissions")}>All Admissions</button>
 
 
         </aside>
