@@ -2,8 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "migrate": "node db-migrations/migrate.js",
+    "migrate:down": "node db-migrations/migrate.js --down"
   },
   "author": "",
   "license": "ISC",
