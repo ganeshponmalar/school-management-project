@@ -85,6 +85,7 @@ const AdmissionForm = () => {
                     const [cId, sec] = e.target.value.split("|");
                     
                     setFormData({ ...formData, classId: cId, section: sec });
+
                 }} required>
                     <option value="">Select Class & Group</option>
                     {classes.map((cls) => (
