@@ -4,8 +4,10 @@ export const up = async (db) => {
     // 1. Users Collection
     await db.collection('users').createIndex({ email: 1 }, { unique: true });
 
+  
     // 2. Admissions Collection
     await db.collection('admissions').createIndex({ email: 1 }, { unique: true });
+
 
     // 3. Classes Collection
     await db.collection('classes').createIndex({ name: 1 }, { unique: true });
@@ -32,3 +34,7 @@ export const down = async (db) => {
     await db.collection('teachers').dropIndex('userId_1');
     await db.collection('exams').dropIndex('name_1_classId_1');
 };
+
+
+
+

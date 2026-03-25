@@ -5,7 +5,7 @@ export const up = async (db) => {
 
     // Check if admin already exists
     const existingAdmin = await db.collection('users').findOne({ email });
-
+           console.log(existingAdmin,'iam form existing admin')
     if (existingAdmin) {
         console.log('Admin user already exists. Skipping seed.');
         return;
@@ -36,3 +36,4 @@ export const down = async (db) => {
     console.log('Removing seeded admin user...');
     await db.collection('users').deleteOne({ email: 'admin@gmail.com' });
 };
+

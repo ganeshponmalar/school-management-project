@@ -1,0 +1,86 @@
+[2026-03-25T10:49:50.419Z] 🚀 Starting Production-Ready Migration
+[2026-03-25T10:49:50.419Z] ⚠️ DRY RUN MODE ENABLED (No data will be written)
+[2026-03-25T10:49:50.420Z] Source: mongodb://127.0.0.1:27017/school-management
+[2026-03-25T10:49:50.420Z] Target: mongodb://127.0.0.1:27017/school-management-new
+
+[2026-03-25T10:49:50.503Z] Found 10 collections to process.
+[2026-03-25T10:49:50.503Z] 
+📦 Collection: users
+[2026-03-25T10:49:50.515Z]    🔍 Dry Run: Would process 22 bulk operations.
+[2026-03-25T10:49:50.515Z] 
+📦 Collection: results
+[2026-03-25T10:49:50.520Z]    🔍 Dry Run: Would process 1 bulk operations.
+[2026-03-25T10:49:50.520Z] 
+📦 Collection: classes
+[2026-03-25T10:49:50.529Z]    🔍 Dry Run: Would process 3 bulk operations.
+[2026-03-25T10:49:50.530Z] 
+📦 Collection: teachers
+[2026-03-25T10:49:50.536Z]    🔍 Dry Run: Would process 1 bulk operations.
+[2026-03-25T10:49:50.536Z] 
+📦 Collection: exams
+[2026-03-25T10:49:50.542Z]    🔍 Dry Run: Would process 3 bulk operations.
+[2026-03-25T10:49:50.542Z] 
+📦 Collection: attendances
+[2026-03-25T10:49:50.550Z]    🔍 Dry Run: Would process 1 bulk operations.
+[2026-03-25T10:49:50.551Z] 
+📦 Collection: fees
+[2026-03-25T10:49:50.557Z]    🔍 Dry Run: Would process 4 bulk operations.
+[2026-03-25T10:49:50.557Z] 
+📦 Collection: admissions
+[2026-03-25T10:49:50.570Z]    🔍 Dry Run: Would process 4 bulk operations.
+[2026-03-25T10:49:50.570Z] 
+📦 Collection: students
+[2026-03-25T10:49:50.577Z]    🔍 Dry Run: Would process 2 bulk operations.
+[2026-03-25T10:49:50.578Z] 
+📦 Collection: migrations
+[2026-03-25T10:49:50.585Z]    🔍 Dry Run: Would process 2 bulk operations.
+[2026-03-25T10:49:50.586Z] 
+✨ Migration process completed.
+[2026-03-25T11:00:12.330Z] 🚀 Starting Production-Grade Migration (v1.1)
+[2026-03-25T11:00:12.331Z] ⚠️ DRY RUN MODE ENABLED (No data will be written)
+[2026-03-25T11:00:12.331Z] Source: mongodb://127.0.0.1:27017/school-management
+[2026-03-25T11:00:12.332Z] Target: mongodb://127.0.0.1:27017/school-management-new
+
+[2026-03-25T11:00:12.406Z] Found 10 collections to process.
+[2026-03-25T11:00:12.406Z] 
+📦 Collection: users
+[2026-03-25T11:00:12.407Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.420Z]    ✅ Dry Run: Would process 22 documents.
+[2026-03-25T11:00:12.420Z] 
+📦 Collection: results
+[2026-03-25T11:00:12.421Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.427Z]    ✅ Dry Run: Would process 1 documents.
+[2026-03-25T11:00:12.427Z] 
+📦 Collection: classes
+[2026-03-25T11:00:12.427Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.433Z]    ✅ Dry Run: Would process 3 documents.
+[2026-03-25T11:00:12.433Z] 
+📦 Collection: teachers
+[2026-03-25T11:00:12.434Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.442Z]    ✅ Dry Run: Would process 1 documents.
+[2026-03-25T11:00:12.444Z] 
+📦 Collection: exams
+[2026-03-25T11:00:12.446Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.453Z]    ✅ Dry Run: Would process 3 documents.
+[2026-03-25T11:00:12.454Z] 
+📦 Collection: attendances
+[2026-03-25T11:00:12.454Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.460Z]    ✅ Dry Run: Would process 1 documents.
+[2026-03-25T11:00:12.460Z] 
+📦 Collection: fees
+[2026-03-25T11:00:12.461Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.466Z]    ✅ Dry Run: Would process 4 documents.
+[2026-03-25T11:00:12.467Z] 
+📦 Collection: admissions
+[2026-03-25T11:00:12.467Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.478Z]    ✅ Dry Run: Would process 4 documents.
+[2026-03-25T11:00:12.480Z] 
+📦 Collection: students
+[2026-03-25T11:00:12.480Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.486Z]    ✅ Dry Run: Would process 2 documents.
+[2026-03-25T11:00:12.487Z] 
+📦 Collection: migrations
+[2026-03-25T11:00:12.487Z]    🔍 Syncing indexes...
+[2026-03-25T11:00:12.492Z]    ✅ Dry Run: Would process 2 documents.
+[2026-03-25T11:00:12.492Z] 
+✨ Migration process completed.
