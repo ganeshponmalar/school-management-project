@@ -3,6 +3,8 @@ import axios from "axios";
 import { useAuth } from "../Context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import AllAdmissions from "./AllAdmissions";
+import SendNotification from "./SendNotification";
+import LeaveRequestForm from "./LeaveRequestForm";
 import "./TeacherHomePage.css";
 
 const TeacherHomePage = () => {
@@ -162,6 +164,8 @@ const TeacherHomePage = () => {
           <a href="/">Home</a>
           <button onClick={() => setActiveView("teachers")} className={activeView === "teachers" ? "nav-btn active" : "nav-btn"}>Teacher Data</button>
           <button onClick={() => setActiveView("admissions")} className={activeView === "admissions" ? "nav-btn active" : "nav-btn"}>View Admissions</button>
+          <button onClick={() => setActiveView("send-notification")} className={activeView === "send-notification" ? "nav-btn active" : "nav-btn"}>Send Notification</button>
+          <button onClick={() => setActiveView("request-leave")} className={activeView === "request-leave" ? "nav-btn active" : "nav-btn"}>Request Leave</button>
           <a href="/policy">Policy</a>
           <a href="/service">Service</a>
           <a href="/help">Help</a>
@@ -251,10 +255,16 @@ const TeacherHomePage = () => {
             ))}
           </div>
         </div>
-      ) : (
+      ) : activeView === "admissions" ? (
         <div className="admission-view-wrapper">
           <AllAdmissions />
         </div>
+      ) : activeView === "send-notification" ? (
+        <SendNotification />
+      ) : activeView === "request-leave" ? (
+        <LeaveRequestForm />
+      ) : (
+        null
       )}
 
       {/* ================= FOOTER ================= */}

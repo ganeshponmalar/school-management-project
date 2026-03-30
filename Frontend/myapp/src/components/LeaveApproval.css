@@ -1,0 +1,140 @@
+.admin-leave-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 20px;
+}
+
+.admin-leave-container h3 {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.leave-requests-table-wrapper {
+    overflow-x: auto;
+}
+
+.leave-requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.leave-requests-table th,
+.leave-requests-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.leave-requests-table th {
+    background-color: #f8f9fa;
+    color: #555;
+    font-weight: 600;
+}
+
+.applicant-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.applicant-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.applicant-email {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.role-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.role-badge.teacher {
+    background: #e7f3ff;
+    color: #007bff;
+}
+
+.role-badge.student {
+    background: #fff4e5;
+    color: #ff9800;
+}
+
+.reason-cell {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.status-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-pill.pending {
+    background: #fff8e1;
+    color: #fbc02d;
+}
+
+.status-pill.approved {
+    background: #e8f5e9;
+    color: #4caf50;
+}
+
+.status-pill.rejected {
+    background: #ffebee;
+    color: #f44336;
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.approve-link-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.reject-link-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.responded-text {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #007bff;
+    font-size: 1.2rem;
+}

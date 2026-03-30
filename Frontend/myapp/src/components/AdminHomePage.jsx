@@ -22,6 +22,8 @@ import FeesHomePage from "./FeesPayment";
 import AllAdmin from "./AllAdmin";
 import AdmissionForm from "./AdmissionForm";
 import AllAdmissions from "./AllAdmissions";
+import SendNotification from "./SendNotification";
+import LeaveApproval from "./LeaveApproval";
 
 import AllStudent from "./AllStudent";
 import AllTeacher from "./AllTeacher";
@@ -85,6 +87,11 @@ const AdminHomePage = () => {
       case "all-admissions":
         return <AllAdmissions />;
 
+      case "send-notification":
+        return <SendNotification />;
+      case "leave-approval":
+        return <LeaveApproval />;
+
 
 
       default:
@@ -142,6 +149,8 @@ const AdminHomePage = () => {
           <button className={activePage === "teacher-data" ? "active" : ""} onClick={() => setActivePage("teacher-data")}>Teacher Data</button>
           <button className={activePage === "add-admission" ? "active" : ""} onClick={() => setActivePage("add-admission")}>Add Admission</button>
           <button className={activePage === "all-admissions" ? "active" : ""} onClick={() => setActivePage("all-admissions")}>All Admissions</button>
+          <button className={activePage === "send-notification" ? "active" : ""} onClick={() => setActivePage("send-notification")}>Send Notification</button>
+          <button className={activePage === "leave-approval" ? "active" : ""} onClick={() => setActivePage("leave-approval")}>Leave Approval</button>
 
 
         </aside>

@@ -16,6 +16,9 @@ import examRouter from "./routes/examRouter.js";
 import feeRouter from "./routes/feeRouter.js"
 import resultRouter from "./routes/resultRouter.js"
 import admissionRouter from "./routes/admissionRouter.js"
+import notificationRouter from "./routes/notificationRouter.js"
+import leaveRouter from "./routes/leaveRouter.js"
+
 
 
 
@@ -61,6 +64,8 @@ app.use("/api/v1/exam", examRouter);
 app.use("/api/v1/fee", feeRouter);
 app.use("/api/v1/result", resultRouter);
 app.use("/api/v1/admission", admissionRouter);
+app.use("/api/v1/notification", notificationRouter);
+app.use("/api/v1/leave", leaveRouter);
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST
 app.use(errorMiddleware);

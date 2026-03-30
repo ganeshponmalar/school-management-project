@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 
 // CSS styling for this page
 import "./StudentHomePage.css";
+import StudentNotifications from "./StudentNotifications";
+import LeaveRequestForm from "./LeaveRequestForm";
 
 // Main Student Management Component
 const StudentHomePage = () => {
@@ -191,6 +193,35 @@ const StudentHomePage = () => {
   // ======================================
   // UI RENDERING SECTION
   // ======================================
+  if (user?.role === "student") {
+    return (
+      <>
+        <header className="header">
+          <h2>School Management</h2>
+          <div className="user-info">
+            <p>Username: {user.name}</p>
+            <p>Role: {user.role}</p>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/stu-att">Attendance</a>
+            <a href="/stu-exam">Exams</a>
+            <a href="/stu-result">Results</a>
+          </nav>
+        </header>
+        <div className="student-dashboard">
+          <StudentNotifications />
+          <hr />
+          <LeaveRequestForm />
+        </div>
+        <footer className="footer">
+          <p>© 2026 School Management System</p>
+        </footer>
+      </>
+    );
+  }
+
   return (
     <>
       {/* HEADER SECTION */}
