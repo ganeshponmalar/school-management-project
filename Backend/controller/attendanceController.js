@@ -14,11 +14,22 @@ export const createAttendance = errorHandler(async (req, res, next) => {
     return next(new ErrorHandler("Please provide all required fields", 400));
   }
 
-  // Check student exists
-  const student = await Student.findById(studentId);
+  // Check student exists (Handle both ObjectId and Roll Number)
+  let student;
+  if (studentId.match(/^[0-9a-fA-F]{24}$/)) {
+    student = await Student.findById(studentId);
+  } else {
+    student = await Student.findOne({ rollNumber: studentId });
+  }
+
   if (!student) {
     return next(new ErrorHandler("Student not found", 404));
   }
+
+  // Use the actual ObjectId for the record
+  // Use the actual ObjectId for the record
+  const actualStudentId = student._id;
+  const actualClassId = student.classId;
 
   // Normalize date (remove time)
   const attendanceDate = new Date(date);
@@ -26,7 +37,7 @@ export const createAttendance = errorHandler(async (req, res, next) => {
 
   // Check duplicate attendance
   const existingAttendance = await Attendance.findOne({
-    studentId,
+    studentId: actualStudentId,
     date: attendanceDate,
   });
 
@@ -36,8 +47,8 @@ export const createAttendance = errorHandler(async (req, res, next) => {
 
   // Create attendance
   const attendance = await Attendance.create({
-    studentId,
-    classId,
+    studentId: actualStudentId,
+    classId: actualClassId,
     date: attendanceDate,
     status,
   });

@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import StudentHomePage from './components/StudentHomePage';
 import TeacherHomePage from './components/TeacherHomePage';
 import AdminHomePage from './components/AdminHomePage';
+import ParentHomePage from './components/ParentHomePage';
 
 // Student-related feature components
 import StuAttendance from './components/StuAttendance';
@@ -23,6 +24,10 @@ import StuClass from './components/StuClass';
 import AllTeacher from './components/AllTeacher';
 import AllAdmin from './components/AllAdmin';
 import AllStudent from './components/AllStudent';
+import ParentAttendance from './components/ParentAttendance';
+import ParentMarks from './components/ParentMarks';
+import ParentFees from './components/ParentFees';
+import ParentCommunication from './components/ParentCommunication';
 
 function App() {
   return (
@@ -40,6 +45,7 @@ function App() {
         <Route path="/student-home" element={<StudentHomePage />} />
         <Route path="/teacher-home" element={<TeacherHomePage />} />
         <Route path="/admin-home" element={<AdminHomePage />} />
+        <Route path="/parent-home" element={<ParentHomePage />} />
 
         {/* ---------- STUDENT FUNCTIONALITY ---------- */}
         <Route path="/stu-att" element={<StuAttendance />} />
@@ -50,6 +56,12 @@ function App() {
         <Route path="/all-teacher" element={<AllTeacher />} />
         <Route path="/all-admin" element={<AllAdmin />} />
         <Route path="/all-student" element={<AllStudent />} />
+
+        {/* ---------- PARENT FUNCTIONALITY ---------- */}
+        <Route path="/parent/attendance/:studentId" element={<ParentAttendance />} />
+        <Route path="/parent/marks/:studentId" element={<ParentMarks />} />
+        <Route path="/parent/fees/:studentId" element={<ParentFees />} />
+        <Route path="/parent/communication/:studentId" element={<ParentCommunication />} />
       </Routes>
     </Router>
   );

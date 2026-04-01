@@ -39,10 +39,13 @@ const AllStudent = () => {
         }
         const lowercasedTerm = searchTerm.toLowerCase();
         const filtered = students.filter((student) => {
+            const name = student.userId?.name || "";
+            const email = student.userId?.email || "";
+            const roll = student.rollNumber ? student.rollNumber.toString() : "";
             return (
-                (student.name && student.name.toLowerCase().includes(lowercasedTerm)) ||
-                (student.email && student.email.toLowerCase().includes(lowercasedTerm)) ||
-                (student.rollNumber && student.rollNumber.toLowerCase().includes(lowercasedTerm))
+                name.toLowerCase().includes(lowercasedTerm) ||
+                email.toLowerCase().includes(lowercasedTerm) ||
+                roll.toLowerCase().includes(lowercasedTerm)
             );
         });
         setFilteredStudents(filtered);
@@ -106,10 +109,10 @@ const AllStudent = () => {
                                     {editStudentId === student._id ? (
                                         // Edit Form
                                         <div className="edit-form-inline">
-                                            <input type="text" name="name" value={editFormData.name || ""} onChange={handleEditChange} placeholder="Name" />
-                                            <input type="email" name="email" value={editFormData.email || ""} onChange={handleEditChange} placeholder="Email" />
-                                            <input type="text" name="phone" value={editFormData.phone || ""} onChange={handleEditChange} placeholder="Phone" />
-                                            <input type="text" name="address" value={editFormData.address || ""} onChange={handleEditChange} placeholder="Address" />
+                                            <input type="text" name="name" value={editFormData.userId?.name || ""} onChange={(e) => setEditFormData({ ...editFormData, userId: { ...editFormData.userId, name: e.target.value } })} placeholder="Name" />
+                                            <input type="text" name="rollNumber" value={editFormData.rollNumber || ""} onChange={handleEditChange} placeholder="Roll Number" />
+                                            <input type="email" name="email" value={editFormData.userId?.email || ""} onChange={(e) => setEditFormData({ ...editFormData, userId: { ...editFormData.userId, email: e.target.value } })} placeholder="Email" />
+                                            <input type="text" name="phone" value={editFormData.userId?.phone || ""} onChange={(e) => setEditFormData({ ...editFormData, userId: { ...editFormData.userId, phone: e.target.value } })} placeholder="Phone" />
                                             <div style={{ marginTop: '10px' }}>
                                                 <button onClick={() => handleSave(student._id)} style={{ marginRight: '10px', padding: '5px 10px', background: 'green', color: 'white', border: 'none', borderRadius: '3px' }}>Save</button>
                                                 <button onClick={handleCancel} style={{ padding: '5px 10px', background: 'red', color: 'white', border: 'none', borderRadius: '3px' }}>Cancel</button>
@@ -118,12 +121,14 @@ const AllStudent = () => {
                                     ) : (
                                         // Display Details
                                         <>
-                                            <p><b>Name:</b> {student.name}</p>
-                                            <p><b>Email:</b> {student.email}</p>
-                                            <p><b>Phone:</b> {student.phone}</p>
-                                            <p><b>Gender:</b> {student.gender}</p>
-                                            <p><b>Address:</b> {student.address}</p>
-                                            <p><b>Date of Birth:</b> {student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString() : "N/A"}</p>
+                                            <p><b>Roll Number:</b> <span style={{ color: '#ff4757', fontWeight: 'bold' }}>{student.rollNumber}</span></p>
+                                            <p><b>Name:</b> {student.userId?.name || "Unlinked Student"}</p>
+                                            <p><b>Guardian Name:</b> {student.guardianInfo?.name}</p>
+                                            <p><b>Email:</b> {student.userId?.email || "N/A"}</p>
+                                            <p><b>Phone:</b> {student.userId?.phone || student.guardianInfo?.phone}</p>
+                                            <p><b>Gender:</b> {student.userId?.gender || "N/A"}</p>
+                                            <p><b>Address:</b> {student.userId?.address || "N/A"}</p>
+                                            <p><b>Admission Date:</b> {student.admissionDate ? new Date(student.admissionDate).toLocaleDateString() : "N/A"}</p>
                                             <button
                                                 onClick={() => handleEditClick(student)}
                                                 style={{ marginTop: '10px', padding: '5px 10px', background: '#007bff', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}

@@ -87,6 +87,8 @@ const Login = () => {
         navigate("/teacher-home");
       } else if (role === "student") {
         navigate("/student-home");
+      } else if (role === "parent") {
+        navigate("/parent-home");
       } else {
         navigate("/");
       }
@@ -141,6 +143,7 @@ const Login = () => {
             <option value="admin">Admin</option>
             <option value="teacher">Teacher</option>
             <option value="student">Student</option>
+            <option value="parent">Parent</option>
           </select>
 
           {/* SUBMIT BUTTON */}

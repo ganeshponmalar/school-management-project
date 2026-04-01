@@ -56,6 +56,7 @@ const SendNotification = () => {
                         <option value="all">All</option>
                         <option value="students">Students</option>
                         <option value="teachers">Teachers</option>
+                        <option value="parents">Parents</option>
                     </select>
                 </div>
                 <div className="form-group">

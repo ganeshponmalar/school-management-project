@@ -10,7 +10,7 @@ import axios from "axios";
 import "./StuAttendance.css";
 
 // Main Attendance Component
-const StuAttendance = () => {
+const StuAttendance = ({ hideHeader = false }) => {
 
   // Store all attendance records fetched from backend
   const [attendance, setAttendance] = useState([]);
@@ -164,9 +164,11 @@ const StuAttendance = () => {
   return (
     <>
       {/* HEADER SECTION */}
-      <header className="header">
-        <h2>School Management</h2>
-      </header>
+      {!hideHeader && (
+        <header className="header">
+          <h2>School Management</h2>
+        </header>
+      )}
 
       <div className="attendance-container">
         <h2>Attendance Management</h2>
@@ -177,7 +179,7 @@ const StuAttendance = () => {
           {/* Student ID Input */}
           <input
             name="studentId"
-            placeholder="Student ID"
+            placeholder="Student Roll Number"
             value={formData.studentId}
             onChange={handleChange}
             required
@@ -267,9 +269,11 @@ const StuAttendance = () => {
       </div>
 
       {/* FOOTER SECTION */}
-      <footer className="footer">
-        © 2026 Attendance System
-      </footer>
+      {!hideHeader && (
+        <footer className="footer">
+          © 2026 Attendance System
+        </footer>
+      )}
     </>
   );
 };

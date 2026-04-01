@@ -13,6 +13,9 @@ export const jsontoken = (user, message, statusCode, res) => {
     case "student":
       cookieName = "studentToken";
       break;
+    case "parent":
+      cookieName = "parentToken";
+      break;
     default:
       return res.status(400).json({
         success: false,

@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import AllAdmissions from "./AllAdmissions";
 import SendNotification from "./SendNotification";
 import LeaveRequestForm from "./LeaveRequestForm";
+import StuAttendance from "./StuAttendance";
+import StuResult from "./stuResult";
+import TeacherChat from "./TeacherChat";
+import AllStudent from "./AllStudent";
 import "./TeacherHomePage.css";
 
 const TeacherHomePage = () => {
@@ -164,6 +168,10 @@ const TeacherHomePage = () => {
           <a href="/">Home</a>
           <button onClick={() => setActiveView("teachers")} className={activeView === "teachers" ? "nav-btn active" : "nav-btn"}>Teacher Data</button>
           <button onClick={() => setActiveView("admissions")} className={activeView === "admissions" ? "nav-btn active" : "nav-btn"}>View Admissions</button>
+          <button onClick={() => setActiveView("students")} className={activeView === "students" ? "nav-btn active" : "nav-btn"}>View Students</button>
+          <button onClick={() => setActiveView("attendance")} className={activeView === "attendance" ? "nav-btn active" : "nav-btn"}>Attendance</button>
+          <button onClick={() => setActiveView("results")} className={activeView === "results" ? "nav-btn active" : "nav-btn"}>Results</button>
+          <button onClick={() => setActiveView("chat")} className={activeView === "chat" ? "nav-btn active" : "nav-btn"}>Chat with Parents</button>
           <button onClick={() => setActiveView("send-notification")} className={activeView === "send-notification" ? "nav-btn active" : "nav-btn"}>Send Notification</button>
           <button onClick={() => setActiveView("request-leave")} className={activeView === "request-leave" ? "nav-btn active" : "nav-btn"}>Request Leave</button>
           <a href="/policy">Policy</a>
@@ -259,10 +267,18 @@ const TeacherHomePage = () => {
         <div className="admission-view-wrapper">
           <AllAdmissions />
         </div>
+      ) : activeView === "students" ? (
+        <AllStudent />
       ) : activeView === "send-notification" ? (
         <SendNotification />
       ) : activeView === "request-leave" ? (
         <LeaveRequestForm />
+      ) : activeView === "attendance" ? (
+        <StuAttendance hideHeader={true} />
+      ) : activeView === "results" ? (
+        <StuResult hideHeader={true} />
+      ) : activeView === "chat" ? (
+        <TeacherChat />
       ) : (
         null
       )}

@@ -4,13 +4,14 @@ import ErrorHandler from "./errorMiddleware.js";
 import { errorHandler } from "./errorHandler.js";
 
 
-  // AUTHENTICATED USER
+// AUTHENTICATED USER
 
 export const isAuthenticated = errorHandler(async (req, res, next) => {
   const token =
     req.cookies.adminToken ||
     req.cookies.teacherToken ||
-    req.cookies.studentToken;
+    req.cookies.studentToken ||
+    req.cookies.parentToken;
 
   // ✅ FIXED
   if (!token) {
@@ -28,7 +29,7 @@ export const isAuthenticated = errorHandler(async (req, res, next) => {
 });
 
 
- // STUDENT ONLY
+// STUDENT ONLY
 
 export const studentToken = errorHandler(async (req, res, next) => {
   const token = req.cookies.studentToken;
@@ -50,7 +51,7 @@ export const studentToken = errorHandler(async (req, res, next) => {
 
 
 
-  // ADMIN ONLY
+// ADMIN ONLY
 
 export const adminToken = errorHandler(async (req, res, next) => {
   const token = req.cookies.adminToken;
@@ -99,15 +100,20 @@ export const teacherToken = errorHandler(async (req, res, next) => {
 
   next();
 });
+// PARENT ONLY
+export const parentToken = errorHandler(async (req, res, next) => {
+  const token = req.cookies.parentToken;
 
+  if (!token) {
+    return next(new ErrorHandler("Parent not authenticated", 401));
+  }
 
+  const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  req.user = await User.findById(decode.id);
 
+  if (!req.user || req.user.role !== "parent") {
+    return next(new ErrorHandler("Parent not authorized", 403));
+  }
 
-
-
-
-
-
-
-
-
+  next();
+});

@@ -18,6 +18,7 @@ import resultRouter from "./routes/resultRouter.js"
 import admissionRouter from "./routes/admissionRouter.js"
 import notificationRouter from "./routes/notificationRouter.js"
 import leaveRouter from "./routes/leaveRouter.js"
+import parentRouter from "./routes/parentRouter.js"
 
 
 
@@ -66,6 +67,7 @@ app.use("/api/v1/result", resultRouter);
 app.use("/api/v1/admission", admissionRouter);
 app.use("/api/v1/notification", notificationRouter);
 app.use("/api/v1/leave", leaveRouter);
+app.use("/api/v1/parent", parentRouter);
 
 // ❗ ERROR MIDDLEWARE — MUST BE LAST
 app.use(errorMiddleware);

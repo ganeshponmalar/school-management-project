@@ -37,6 +37,10 @@ const resultSchema = new mongoose.Schema(
       enum: ["A", "B", "C", "D", "F"],
       default: "F",
     },
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

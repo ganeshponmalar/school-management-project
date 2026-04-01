@@ -37,3 +37,8 @@ export const down = async (db) => {
     await db.collection('users').deleteOne({ email: 'admin@gmail.com' });
 };
 
+//this function run when migration /seeding applied
+
+//Check if admin already exists and prevent duplicate admin
+//hashing password
+//inserting admin user

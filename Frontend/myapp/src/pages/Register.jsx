@@ -26,14 +26,10 @@ const Register = () => {
     phone: "",
     dateOfBirth: "",
     gender: "",
+    studentRollNumber: "",
+    studentPhone: "",
   });
 
-  /*
-    HANDLE INPUT CHANGE
-    - Updates specific field dynamically
-    - Spread operator keeps existing values
-    - Computed property updates correct input field
-  */
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -41,24 +37,18 @@ const Register = () => {
     });
   };
 
-  /*
-    HANDLE FORM SUBMIT
-    - Sends registration data to backend API
-    - Shows success/error message
-    - Clears form after successful registration
-  */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/v1/user/create_user",
-        formData
-      );
+      const endpoint = formData.role === "parent"
+        ? "http://localhost:5000/api/v1/parent/register"
+        : "http://localhost:5000/api/v1/user/create_user";
+
+      const res = await axios.post(endpoint, formData);
 
       alert(res.data.message);
 
-      // Reset form after successful registration
       setFormData({
         name: "",
         email: "",
@@ -68,10 +58,14 @@ const Register = () => {
         phone: "",
         dateOfBirth: "",
         gender: "",
+        studentRollNumber: "",
+        studentPhone: "",
       });
 
     } catch (error) {
-      alert(error.response?.data?.message || "Registration failed");
+      const errorMsg = error.response?.data?.message || error.message || "Registration failed";
+      alert(errorMsg);
+      console.error("Registration Error:", error.response?.data || error.message);
     }
   };
 
@@ -145,6 +139,7 @@ const Register = () => {
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
             <option value="admin">Admin</option>
+            <option value="parent">Parent</option>
           </select>
 
           {/* PHONE NUMBER */}
@@ -185,6 +180,26 @@ const Register = () => {
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
+
+          {/* PARENT SPECIFIC FIELDS */}
+          {formData.role === "parent" && (
+            <>
+              <input
+                name="studentRollNumber"
+                placeholder="Child's Roll Number"
+                value={formData.studentRollNumber}
+                onChange={handleChange}
+                required
+              />
+              <input
+                name="studentPhone"
+                placeholder="Guardian Phone (stored with child)"
+                value={formData.studentPhone}
+                onChange={handleChange}
+                required
+              />
+            </>
+          )}
 
           {/* SUBMIT BUTTON */}
           <button type="submit">Register</button>

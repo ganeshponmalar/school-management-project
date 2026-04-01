@@ -27,6 +27,7 @@ import LeaveApproval from "./LeaveApproval";
 
 import AllStudent from "./AllStudent";
 import AllTeacher from "./AllTeacher";
+import AllParents from "./AllParents";
 import "./AdminHomePage.css";
 
 
@@ -91,6 +92,8 @@ const AdminHomePage = () => {
         return <SendNotification />;
       case "leave-approval":
         return <LeaveApproval />;
+      case "parent-data":
+        return <AllParents />;
 
 
 
@@ -102,6 +105,7 @@ const AdminHomePage = () => {
               <button onClick={() => setActivePage("admin-data")}>Admin Data</button>
               <button onClick={() => setActivePage("student-data")}>Student Data</button>
               <button onClick={() => setActivePage("teacher-data")}>Teacher Data</button>
+              <button onClick={() => setActivePage("parent-data")}>Parent Data</button>
             </div>
           </div>
 
@@ -151,6 +155,7 @@ const AdminHomePage = () => {
           <button className={activePage === "all-admissions" ? "active" : ""} onClick={() => setActivePage("all-admissions")}>All Admissions</button>
           <button className={activePage === "send-notification" ? "active" : ""} onClick={() => setActivePage("send-notification")}>Send Notification</button>
           <button className={activePage === "leave-approval" ? "active" : ""} onClick={() => setActivePage("leave-approval")}>Leave Approval</button>
+          <button className={activePage === "parent-data" ? "active" : ""} onClick={() => setActivePage("parent-data")}>Parent Data</button>
 
 
         </aside>

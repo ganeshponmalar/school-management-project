@@ -2,13 +2,24 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./StuResult.css";
 
-const StuResult = () => {
+const StuResult = ({ hideHeader = false }) => {
 
     // Store all student results fetched from backend
     const [results, setResults] = useState([]);
 
     // Holds ID when editing a result (null = create mode)
     const [editId, setEditId] = useState(null);
+
+    const handlePublish = async (id) => {
+        try {
+            await axios.put(`http://localhost:5000/api/v1/parent/teacher/publish-result/${id}`, {}, { withCredentials: true });
+            alert("Result published to parent!");
+            getResults();
+        } catch (err) {
+            console.error("Publish failed:", err);
+            alert("Publish failed");
+        }
+    };
 
     // Form state for creating/updating result
     const [formData, setFormData] = useState({
@@ -133,15 +144,17 @@ const StuResult = () => {
     return (
         <>
             {/* ================= HEADER SECTION ================= */}
-            <header className="result-header">
-                <h2>Student Result System</h2>
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                    <a href="/service">Service</a>
-                    <a href="/contact">Contact</a>
-                </nav>
-            </header>
+            {!hideHeader && (
+                <header className="result-header">
+                    <h2>Student Result System</h2>
+                    <nav>
+                        <a href="/">Home</a>
+                        <a href="/about">About</a>
+                        <a href="/service">Service</a>
+                        <a href="/contact">Contact</a>
+                    </nav>
+                </header>
+            )}
 
             {/* ================= MAIN CONTENT ================= */}
             <div className="result-container">
@@ -151,7 +164,7 @@ const StuResult = () => {
                 <form className="result-form" onSubmit={handleSubmit}>
                     <input
                         name="studentId"
-                        placeholder="Student ID"
+                        placeholder="Student Roll Number"
                         value={formData.studentId}
                         onChange={handleChange}
                         required
@@ -246,6 +259,12 @@ const StuResult = () => {
                                 >
                                     Delete
                                 </button>
+                                {!r.isPublished && (
+                                    <button className="publish-btn" onClick={() => handlePublish(r._id)}>
+                                        Publish to Parent
+                                    </button>
+                                )}
+                                {r.isPublished && <span className="published-label">Published</span>}
                             </div>
                         </div>
                     ))}
@@ -253,9 +272,11 @@ const StuResult = () => {
             </div>
 
             {/* ================= FOOTER ================= */}
-            <footer className="result-footer">
-                <p>© 2026 Student Result Portal</p>
-            </footer>
+            {!hideHeader && (
+                <footer className="result-footer">
+                    <p>© 2026 Student Result Portal</p>
+                </footer>
+            )}
         </>
     );
 };
